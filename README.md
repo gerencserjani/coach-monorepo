@@ -49,8 +49,15 @@ All apps talk to the same backend — [coach-calendar](https://github.com/gerenc
 
 ## Adding a new coach
 
-See [`docs/new-coach-runbook.md`](docs/new-coach-runbook.md). There's no
-generator/scaffold script yet — `apps/betti` is the template, copied by
-hand; the runbook walks through what to replace, what env vars a new app
-needs, and the deploy/backend/DNS steps.
+```bash
+npm run create-coach-app -- <coach-slug>
+```
 
+scaffolds a new `apps/<coach-slug>` from `apps/betti`
+(`scripts/create-coach-app.mjs`), pre-filling every coach-specific file with
+`TODO:`-prefixed placeholders instead of copying Betti's real content/branding
+under another coach's name. See
+[`docs/new-coach-runbook.md`](docs/new-coach-runbook.md) for the full
+walkthrough — what the script does and doesn't touch, replacing the
+placeholder content, and the remaining manual steps (real palette, backend
+Coach creation, Vercel/DNS).
