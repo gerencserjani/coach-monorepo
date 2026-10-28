@@ -1,8 +1,8 @@
 import type { CoachQualification } from "@coaching/core";
-import karriercoachingImg from "../assets/qualifications/karriercoaching-kepzes.jpg";
-import csaladEsParkapcsolatiImg from "../assets/qualifications/csalad-es-parkapcsolati-coach-kepzes.jpg";
-import gordonTanusitvanyImg from "../assets/qualifications/gordon-tanusitvany.jpg";
-import gordonOklevelImg from "../assets/qualifications/gordon-oklevel.jpg";
+import karriercoachingImg from "../assets/qualifications/karriercoaching-kepzes.webp";
+import csaladEsParkapcsolatiImg from "../assets/qualifications/csalad-es-parkapcsolati-coach-kepzes.webp";
+import gordonTanusitvanyImg from "../assets/qualifications/gordon-tanusitvany.webp";
+import gordonOklevelImg from "../assets/qualifications/gordon-oklevel.webp";
 
 // `image` stays unset for a credential until the real scan exists -- the
 // gallery renders a placeholder card from just the alt/label until then
