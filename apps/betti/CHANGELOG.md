@@ -1,3 +1,23 @@
+# [1.37.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.36.0...v1.37.0) (2026-10-28)
+
+### Bug Fixes
+
+- cap the lightbox image so the whole dialog always fits without scrolling ([3019d17](https://github.com/gerencserjani/coach-monorepo/commit/3019d177b0fa717c584b0cf2b45533602ee08215))
+- center the qualification gallery on its middle card, not the left edge ([88724a0](https://github.com/gerencserjani/coach-monorepo/commit/88724a08d6f52afd60c6e393273290f89728c2c4))
+- center the qualification lightbox and match the photo to the text height ([8566883](https://github.com/gerencserjani/coach-monorepo/commit/8566883f2e5667164d79a7d04a5e17ca9fce8834))
+- correct scroll-arrow detection at the near-exact-fit boundary ([dab51bd](https://github.com/gerencserjani/coach-monorepo/commit/dab51bdb80a044c82df943c87d41942a11e222d8))
+- stop clearing dialog content on close, fixing an empty-box flash ([c35dcbd](https://github.com/gerencserjani/coach-monorepo/commit/c35dcbda9263b0c699781acf184dbc81b147320e))
+- stop cutting the "szentül hiszem" sentence out of its paragraph ([45f67a2](https://github.com/gerencserjani/coach-monorepo/commit/45f67a24bb5142aaca439001ecadabc6f87e63f3))
+
+### Features
+
+- add About/Rólam section with qualifications gallery, fix placeholder copy ([e0e6072](https://github.com/gerencserjani/coach-monorepo/commit/e0e60720820e251dfd1d251361d94edb17588eb0))
+- wire in Betti's real qualification scans and PDFs ([3b9710d](https://github.com/gerencserjani/coach-monorepo/commit/3b9710d94e7fb5ff9a9e8ebe273584b07a440fc0))
+
+### Performance Improvements
+
+- convert qualification gallery images from JPEG to WebP ([3f88d10](https://github.com/gerencserjani/coach-monorepo/commit/3f88d1021667f48b2171dc34983df77dbf8ab3b6))
+
 # [1.36.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.35.0...v1.36.0) (2026-10-22)
 
 ### Features
