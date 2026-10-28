@@ -63,7 +63,7 @@ export default function QualificationGallery({
             dialogRef.current?.close();
           }
         }}
-        className="max-w-[90vw] rounded-[18px] border border-line bg-bg-card p-4 backdrop:bg-black/60"
+        className="fixed inset-0 m-auto max-h-[90vh] max-w-[90vw] overflow-y-auto rounded-[18px] border border-line bg-bg-card p-4 opacity-100 scale-100 transition-[opacity,scale,overlay,display] duration-200 [transition-behavior:allow-discrete] starting:opacity-0 starting:scale-95 backdrop:bg-black/60 backdrop:transition-colors backdrop:duration-200 backdrop:[transition-behavior:allow-discrete] starting:backdrop:bg-black/0"
       >
         {active && (
           <div className="flex flex-col items-center gap-3">

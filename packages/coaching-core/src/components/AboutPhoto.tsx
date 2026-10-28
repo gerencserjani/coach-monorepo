@@ -6,16 +6,25 @@ import type { CoachImage } from "../CoachConfig.ts";
 interface AboutPhotoProps {
   image?: CoachImage;
   alt: string;
+  className?: string;
 }
 
 export default function AboutPhoto({
   image,
   alt,
+  className,
 }: AboutPhotoProps): ReactElement {
   const { t } = useTranslation();
 
   return (
-    <div className="aspect-[4/5] overflow-hidden rounded-[18px] border border-line bg-bg-card">
+    <div
+      className={[
+        "aspect-[4/5] overflow-hidden rounded-[18px] border border-line bg-bg-card",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {image ? (
         <img
           src={image.src}

@@ -23,7 +23,7 @@ export default function About(): ReactElement {
             {t("about.heading")}
           </h2>
 
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div>
               <h3 className="serif mb-4 text-[20px]">
                 {t("about.introHeading")}
@@ -33,7 +33,11 @@ export default function About(): ReactElement {
                 <p>{t("about.introParagraph2")}</p>
               </div>
             </div>
-            <AboutPhoto image={aboutImage} alt={t("about.photoAlt")} />
+            <AboutPhoto
+              image={aboutImage}
+              alt={t("about.photoAlt")}
+              className="lg:aspect-auto lg:h-full"
+            />
           </div>
 
           <blockquote className="serif my-10 max-w-[620px] border-l-4 border-accent-soft pl-6 text-[clamp(19px,2.4vw,24px)] leading-[1.5] text-ink italic xs:my-12">
