@@ -68,6 +68,29 @@ describe("About", () => {
     expect(screen.getByText("Teszt idézet.")).toBeVisible();
   });
 
+  it("starts with only the intro accordion section expanded, and expands another on click", async () => {
+    renderAbout();
+    const introToggle = screen.getByRole("button", { name: "Honnan indultam" });
+    const pathToggle = screen.getByRole("button", { name: "A szakmai utam" });
+    const reflectionToggle = screen.getByRole("button", {
+      name: "Amit ma vallok",
+    });
+    expect(introToggle).toHaveAttribute("aria-expanded", "true");
+    expect(pathToggle).toHaveAttribute("aria-expanded", "false");
+    expect(reflectionToggle).toHaveAttribute("aria-expanded", "false");
+
+    await userEvent.click(pathToggle);
+
+    expect(pathToggle).toHaveAttribute("aria-expanded", "true");
+    // Independent toggles, not exclusive tabs -- opening one doesn't close
+    // another.
+    expect(introToggle).toHaveAttribute("aria-expanded", "true");
+    expect(reflectionToggle).toHaveAttribute("aria-expanded", "false");
+
+    await userEvent.click(introToggle);
+    expect(introToggle).toHaveAttribute("aria-expanded", "false");
+  });
+
   it("shows a photo placeholder when the coach has no aboutImage configured yet", () => {
     renderAbout();
     expect(
@@ -129,6 +152,8 @@ describe("About", () => {
     expect(
       screen.queryByText("Képzéseim és végzettségeim"),
     ).not.toBeInTheDocument();
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Qualification/ }),
+    ).not.toBeInTheDocument();
   });
 });

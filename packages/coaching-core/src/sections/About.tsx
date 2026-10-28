@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import Section from "../components/Section.tsx";
 import Container from "../components/Container.tsx";
 import AboutPhoto from "../components/AboutPhoto.tsx";
+import AccordionItem from "../components/AccordionItem.tsx";
 import QualificationGallery from "../components/QualificationGallery.tsx";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { useCoachConfig } from "../CoachConfig.ts";
@@ -23,43 +24,36 @@ export default function About(): ReactElement {
             {t("about.heading")}
           </h2>
 
-          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-            <div>
-              <h3 className="serif mb-4 text-[20px]">
-                {t("about.introHeading")}
-              </h3>
+          <AccordionItem title={t("about.introHeading")} defaultOpen>
+            <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
               <div className="space-y-5 text-[17px] text-ink-soft">
                 <p>{t("about.introParagraph1")}</p>
                 <p>{t("about.introParagraph2")}</p>
               </div>
+              <AboutPhoto
+                image={aboutImage}
+                alt={t("about.photoAlt")}
+                className="lg:aspect-auto lg:h-full"
+              />
             </div>
-            <AboutPhoto
-              image={aboutImage}
-              alt={t("about.photoAlt")}
-              className="lg:aspect-auto lg:h-full"
-            />
-          </div>
+          </AccordionItem>
 
-          <blockquote className="serif my-10 max-w-[620px] border-l-4 border-accent-soft pl-6 text-[clamp(19px,2.4vw,24px)] leading-[1.5] text-ink italic xs:my-12">
+          <blockquote className="serif my-6 max-w-[620px] border-l-4 border-accent-soft pl-6 text-[clamp(19px,2.4vw,24px)] leading-[1.5] text-ink italic">
             {t("about.pullQuote")}
           </blockquote>
 
-          <div className="max-w-[680px]">
-            <h3 className="serif mb-4 text-[20px]">{t("about.pathHeading")}</h3>
-            <p className="text-[17px] text-ink-soft">
+          <AccordionItem title={t("about.pathHeading")}>
+            <p className="max-w-[680px] text-[17px] text-ink-soft">
               {t("about.pathParagraph")}
             </p>
-          </div>
+          </AccordionItem>
 
-          <div className="mt-10 max-w-[680px] xs:mt-12">
-            <h3 className="serif mb-4 text-[20px]">
-              {t("about.reflectionHeading")}
-            </h3>
-            <div className="space-y-5 text-[17px] text-ink-soft">
+          <AccordionItem title={t("about.reflectionHeading")}>
+            <div className="max-w-[680px] space-y-5 text-[17px] text-ink-soft">
               <p>{t("about.reflectionParagraph1")}</p>
               <p>{t("about.reflectionParagraph2")}</p>
             </div>
-          </div>
+          </AccordionItem>
         </div>
 
         {qualifications.length > 0 && (
