@@ -36,6 +36,17 @@ export default function QualificationGallery({
     const el = scrollerRef.current;
     if (!el) return;
 
+    // Start centered on the middle card rather than scrolled all the way
+    // left -- at any viewport width this means a neighbor peeks in on both
+    // sides symmetrically, instead of only ever being cropped on the right.
+    const middleCard = el.children[Math.floor(items.length / 2)];
+    if (middleCard instanceof HTMLElement) {
+      el.scrollLeft = Math.max(
+        0,
+        middleCard.offsetLeft - (el.clientWidth - middleCard.offsetWidth) / 2,
+      );
+    }
+
     const update = () => {
       setCanScrollPrev(el.scrollLeft > 4);
       setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
@@ -83,7 +94,7 @@ export default function QualificationGallery({
               key={item.alt}
               type="button"
               onClick={() => openAt(index)}
-              className="w-[150px] shrink-0 snap-start rounded-[18px] border border-line bg-bg-card p-3 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_10px_24px_var(--shadow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent xs:w-[180px] sm:w-[200px]"
+              className="w-[150px] shrink-0 snap-center rounded-[18px] border border-line bg-bg-card p-3 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_10px_24px_var(--shadow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent xs:w-[180px] sm:w-[200px]"
             >
               <span className="flex aspect-[3/4] items-center justify-center overflow-hidden rounded-[10px]">
                 {item.image ? (
