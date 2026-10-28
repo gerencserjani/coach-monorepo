@@ -172,16 +172,28 @@ export default function QualificationGallery({
             dialogRef.current?.close();
           }
         }}
-        className="fixed inset-0 m-auto max-h-[90vh] max-w-[90vw] overflow-y-auto rounded-[18px] border border-line bg-bg-card p-4 opacity-100 scale-100 transition-[opacity,scale,overlay,display] duration-200 [transition-behavior:allow-discrete] starting:opacity-0 starting:scale-95 backdrop:bg-black/60 backdrop:transition-colors backdrop:duration-200 backdrop:[transition-behavior:allow-discrete] starting:backdrop:bg-black/0"
+        className="fixed inset-0 m-auto max-h-[90vh] max-w-[90vw] overflow-hidden rounded-[18px] border border-line bg-bg-card p-4 opacity-100 scale-100 transition-[opacity,scale,overlay,display] duration-200 [transition-behavior:allow-discrete] starting:opacity-0 starting:scale-95 backdrop:bg-black/60 backdrop:transition-colors backdrop:duration-200 backdrop:[transition-behavior:allow-discrete] starting:backdrop:bg-black/0"
       >
         {active && (
           <div className="flex flex-col items-center gap-3">
+            {/* The image's cap leaves room for the label/meta/button row
+                below it (measured ~145px tall with every row present,
+                even with a deliberately long, wrapped label -- 190px is a
+                safe reserve on top of that) rather than capping the image
+                at a flat vh value: that way the whole dialog, image plus
+                chrome, never exceeds the dialog's own max-h-[90vh], at
+                any viewport height, without ever needing to scroll inside
+                it. (A flex-grow region here would need the dialog itself
+                to have a real stretched height to grow into, which it
+                deliberately doesn't -- it shrink-wraps small content like
+                the placeholder -- so calc() is the robust, not-fighting-
+                flexbox way to reserve that space.) */}
             {active.image ? (
               <img
                 src={active.image.src}
                 srcSet={active.image.srcSet}
                 alt={active.alt}
-                className="max-h-[85vh] max-w-full object-contain"
+                className="max-h-[calc(90vh-190px)] max-w-full object-contain"
               />
             ) : (
               <ImagePlaceholder
@@ -190,12 +202,16 @@ export default function QualificationGallery({
               />
             )}
             {active.label && (
-              <p className="text-[14px] text-ink-soft">{active.label}</p>
+              <p className="shrink-0 text-[14px] text-ink-soft">
+                {active.label}
+              </p>
             )}
             {active.meta && (
-              <p className="text-[13px] text-accent-soft">{active.meta}</p>
+              <p className="shrink-0 text-[13px] text-accent-soft">
+                {active.meta}
+              </p>
             )}
-            <div className="flex gap-3">
+            <div className="flex shrink-0 gap-3">
               {active.pdfHref && (
                 <a
                   href={active.pdfHref}
