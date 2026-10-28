@@ -1,3 +1,10 @@
+## [1.37.1](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.0...v1.37.1) (2026-10-28)
+
+### Bug Fixes
+
+- **about:** keep the portrait photo at a fixed size across tabs ([8cb01ca](https://github.com/gerencserjani/coach-monorepo/commit/8cb01ca8ba9f5a07957e6eda0f0ff70a22f8d211))
+- **about:** stop the subheading tab row from gaining a vertical scrollbar ([c301158](https://github.com/gerencserjani/coach-monorepo/commit/c3011588be2d2401b63177378e1ba819d9077b15))
+
 # [1.37.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.36.0...v1.37.0) (2026-10-28)
 
 ### Bug Fixes
