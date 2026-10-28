@@ -47,12 +47,7 @@
     "reflectionHeading": "Amit ma vallok",
     "reflectionParagraph1": "Teszt bekezdés 4.",
     "reflectionParagraph2": "Teszt bekezdés 5.",
-    "qualificationsHeading": "Képzéseim és végzettségeim",
-    "qualificationPlaceholder": "Kép hamarosan",
-    "openPdf": "PDF megnyitása",
-    "scrollPrev": "Előző képzések",
-    "scrollNext": "Következő képzések",
-    "closeImage": "Bezárás"
+    "qualificationsHeading": "Képzettségeim"
   },
   "services": {
     "heading": "Miben lehetek a segítségedre?",
