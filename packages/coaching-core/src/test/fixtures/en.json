@@ -11,7 +11,8 @@
       "close": "Close menu"
     },
     "nav": {
-      "introduction": "About",
+      "introduction": "Home",
+      "about": "About me",
       "help": "How I can help",
       "community": "Community",
       "prices": "Pricing",
@@ -31,7 +32,18 @@
   },
   "quoteBlock": {
     "quote": "“Communication became especially important to me because, as a child, I experienced firsthand what it costs when two people can no longer truly talk to each other.”",
-    "leadIn": "This is where my path toward coaching began — and today I do this work so others don't have to go through the same thing. [CONTENT NEEDED: professional background, training, experience]"
+    "leadIn": "This is where my path toward coaching began — and today I do this work so that others don't have to go through the same thing, whether from the adult's or the child's side."
+  },
+  "about": {
+    "kicker": "My own path to coaching",
+    "heading": "About me",
+    "paragraph1": "Test paragraph 1.",
+    "paragraph2": "Test paragraph 2.",
+    "paragraph3": "Test paragraph 3.",
+    "paragraph4": "Test paragraph 4.",
+    "paragraph5": "Test paragraph 5.",
+    "qualificationsHeading": "My trainings and qualifications",
+    "closeImage": "Close"
   },
   "services": {
     "heading": "How can I help you?",

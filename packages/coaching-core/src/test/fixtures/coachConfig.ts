@@ -8,8 +8,16 @@ export const testCoachConfig: CoachConfig = {
   logo: "/test-logo.webp",
   heroImage: { src: "/test-hero.webp" },
   communityImage: { src: "/test-community.webp" },
+  qualifications: [
+    {
+      image: { src: "/test-qualification.webp" },
+      alt: "Test qualification certificate",
+      label: "Test Qualification",
+    },
+  ],
   navLinks: [
     { id: "bemutatkozas", labelKey: "common.nav.introduction" },
+    { id: "rolam", labelKey: "common.nav.about" },
     { id: "segitseg", labelKey: "common.nav.help" },
     { id: "kozosseg", labelKey: "common.nav.community" },
     { id: "arak", labelKey: "common.nav.prices" },

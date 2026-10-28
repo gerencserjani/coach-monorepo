@@ -21,6 +21,16 @@ test("nav link scrolls to the booking section", async ({ page }) => {
   await expect(page.locator("#idopontfoglalas")).toBeInViewport();
 });
 
+test("nav link scrolls to the About/Rólam section", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("link", { name: "Rólam" }).click();
+  await expect(page.locator("#rolam")).toBeInViewport();
+  await expect(
+    page.getByRole("heading", { name: "Rólam", exact: true }),
+  ).toBeVisible();
+});
+
 test("?lang=en query param switches visible text (LanguageSwitcher UI is hidden, but the i18n mechanism it used stays live)", async ({
   page,
 }) => {

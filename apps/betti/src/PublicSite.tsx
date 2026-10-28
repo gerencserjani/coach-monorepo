@@ -3,6 +3,7 @@ import {
   Header,
   Hero,
   QuoteBlock,
+  About,
   Services,
   Community,
   Pricing,
@@ -23,6 +24,7 @@ export default function PublicSite() {
           quote={t("quoteBlock.quote")}
           leadIn={t("quoteBlock.leadIn")}
         />
+        <About />
         <Services />
         <Community />
         <Pricing />

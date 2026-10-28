@@ -21,6 +21,12 @@ export interface CoachImage {
   srcSet?: string;
 }
 
+export interface CoachQualification {
+  image: CoachImage;
+  alt: string;
+  label?: string;
+}
+
 export interface CoachContactInfo {
   address: string;
   street: string;
@@ -45,6 +51,7 @@ export interface CoachConfig {
   logo: string;
   heroImage: CoachImage;
   communityImage: CoachImage;
+  qualifications: CoachQualification[];
   navLinks: NavLink[];
   contactLink: NavLink;
   services: Service[];
