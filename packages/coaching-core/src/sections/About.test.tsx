@@ -52,7 +52,7 @@ afterEach(() => {
 });
 
 describe("About", () => {
-  it("renders the bio heading, the thematic subheadings, and the pull-quote", () => {
+  it("renders the bio heading and the thematic subheadings", () => {
     renderAbout();
     expect(screen.getByRole("heading", { name: "Rólam" })).toBeVisible();
     expect(
@@ -65,7 +65,7 @@ describe("About", () => {
       screen.getByRole("heading", { name: "Amit ma vallok" }),
     ).toBeVisible();
     expect(screen.getByText("Teszt bekezdés 1.")).toBeVisible();
-    expect(screen.getByText("Teszt idézet.")).toBeVisible();
+    expect(screen.getByText("Teszt bekezdés 5.")).toBeVisible();
   });
 
   it("shows a photo placeholder when the coach has no aboutImage configured yet", () => {
