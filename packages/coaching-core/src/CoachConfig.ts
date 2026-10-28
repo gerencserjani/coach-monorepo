@@ -22,7 +22,9 @@ export interface CoachImage {
 }
 
 export interface CoachQualification {
-  image: CoachImage;
+  // Absent while the coach hasn't supplied the real scan yet -- renders a
+  // placeholder in the gallery instead of a broken image.
+  image?: CoachImage;
   alt: string;
   label?: string;
 }
@@ -51,6 +53,9 @@ export interface CoachConfig {
   logo: string;
   heroImage: CoachImage;
   communityImage: CoachImage;
+  // Absent while the coach hasn't supplied a personal photo yet -- the About
+  // section renders a placeholder instead.
+  aboutImage?: CoachImage;
   qualifications: CoachQualification[];
   navLinks: NavLink[];
   contactLink: NavLink;

@@ -14,6 +14,10 @@ export const testCoachConfig: CoachConfig = {
       alt: "Test qualification certificate",
       label: "Test Qualification",
     },
+    {
+      alt: "Test qualification without an image yet",
+      label: "Pending Qualification",
+    },
   ],
   navLinks: [
     { id: "bemutatkozas", labelKey: "common.nav.introduction" },

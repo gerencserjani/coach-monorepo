@@ -52,10 +52,47 @@ afterEach(() => {
 });
 
 describe("About", () => {
-  it("renders the bio heading and paragraphs", () => {
+  it("renders the bio heading, the thematic subheadings, and the pull-quote", () => {
     renderAbout();
     expect(screen.getByRole("heading", { name: "Rólam" })).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Honnan indultam" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "A szakmai utam" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Amit ma vallok" }),
+    ).toBeVisible();
     expect(screen.getByText("Teszt bekezdés 1.")).toBeVisible();
+    expect(screen.getByText("Teszt idézet.")).toBeVisible();
+  });
+
+  it("shows a photo placeholder when the coach has no aboutImage configured yet", () => {
+    renderAbout();
+    expect(
+      screen.queryByRole("img", { name: "Teszt coach portréja" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("Fotó hamarosan")).toBeVisible();
+  });
+
+  it("renders the real photo once aboutImage is configured", () => {
+    renderAbout({
+      ...testCoachConfig,
+      aboutImage: { src: "/test-about.webp" },
+    });
+    expect(
+      screen.getByRole("img", { name: "Teszt coach portréja" }),
+    ).toBeVisible();
+    expect(screen.queryByText("Fotó hamarosan")).not.toBeInTheDocument();
+  });
+
+  it("renders a placeholder card for a qualification that has no image yet", () => {
+    renderAbout();
+    const pendingCard = screen.getByRole("button", {
+      name: /Pending Qualification/,
+    });
+    expect(within(pendingCard).getByText("Kép hamarosan")).toBeVisible();
   });
 
   it("renders a qualification thumbnail that opens a lightbox on click", async () => {
