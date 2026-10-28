@@ -77,7 +77,7 @@ export default function About(): ReactElement {
 
           <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div className="flex flex-col">
-              <div className="brand-scrollbar mb-6 flex gap-6 overflow-x-auto border-b border-line">
+              <div className="brand-scrollbar mb-6 flex gap-6 overflow-x-auto overflow-y-hidden border-b border-line">
                 {tabs.map((tab, index) => (
                   <button
                     key={tab.label}
