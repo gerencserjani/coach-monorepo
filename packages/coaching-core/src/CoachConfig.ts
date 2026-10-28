@@ -22,15 +22,9 @@ export interface CoachImage {
 }
 
 export interface CoachQualification {
-  // Absent while the coach hasn't supplied the real scan yet -- renders a
-  // placeholder in the gallery instead of a broken image.
-  image?: CoachImage;
-  alt: string;
-  label?: string;
+  label: string;
   /** Short issuer/date line shown under the label, e.g. "Gordon Training International · 2024". */
   meta?: string;
-  /** Link to the original PDF, when one exists, offered in the lightbox alongside the preview image. */
-  pdfHref?: string;
 }
 
 export interface CoachContactInfo {

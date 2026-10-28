@@ -12,7 +12,6 @@ export { default as QuoteBlock } from "./components/QuoteBlock.tsx";
 export { default as Container } from "./components/Container.tsx";
 export { default as Section } from "./components/Section.tsx";
 export { default as LanguageSwitcher } from "./components/LanguageSwitcher.tsx";
-export { default as QualificationGallery } from "./components/QualificationGallery.tsx";
 
 export { default as Hero } from "./sections/Hero.tsx";
 export { default as About } from "./sections/About.tsx";

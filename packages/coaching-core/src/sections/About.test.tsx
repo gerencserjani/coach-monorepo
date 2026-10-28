@@ -1,6 +1,6 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import About from "./About.tsx";
 import CoachConfigProvider from "../CoachConfigProvider.tsx";
 import { testCoachConfig } from "../test/fixtures/coachConfig.ts";
@@ -25,71 +25,34 @@ class FakeIntersectionObserver {
   unobserve = vi.fn();
 }
 
-// jsdom doesn't implement ResizeObserver either -- QualificationGallery's
-// scroll-affordance tracking needs the constructor to exist.
-class FakeResizeObserver {
-  observe = vi.fn();
-  disconnect = vi.fn();
-  unobserve = vi.fn();
-}
-
-// jsdom doesn't implement <dialog>'s showModal()/close() at all (not even as
-// a stub) -- polyfill them well enough for QualificationGallery's lightbox:
-// toggle the `open` attribute and fire the `close` event it listens for.
-let originalShowModal: typeof HTMLDialogElement.prototype.showModal;
-let originalClose: typeof HTMLDialogElement.prototype.close;
-
 beforeEach(async () => {
   vi.stubGlobal("IntersectionObserver", FakeIntersectionObserver);
-  vi.stubGlobal("ResizeObserver", FakeResizeObserver);
-  // jsdom doesn't implement matchMedia -- Embla Carousel (QualificationGallery)
-  // checks it internally for its responsive-breakpoints option handling.
-  vi.stubGlobal(
-    "matchMedia",
-    vi.fn().mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    })),
-  );
-  originalShowModal = HTMLDialogElement.prototype.showModal;
-  originalClose = HTMLDialogElement.prototype.close;
-  HTMLDialogElement.prototype.showModal = function () {
-    this.setAttribute("open", "");
-  };
-  HTMLDialogElement.prototype.close = function () {
-    this.removeAttribute("open");
-    this.dispatchEvent(new Event("close"));
-  };
   await i18n.changeLanguage("hu");
 });
 
-afterEach(() => {
-  vi.unstubAllGlobals();
-  HTMLDialogElement.prototype.showModal = originalShowModal;
-  HTMLDialogElement.prototype.close = originalClose;
-});
-
 describe("About", () => {
-  it("renders the bio heading and the thematic subheadings", () => {
+  it("renders the bio heading, defaults to the first tab, and shows its paragraphs", () => {
     renderAbout();
     expect(screen.getByRole("heading", { name: "Rólam" })).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Honnan indultam" }),
-    ).toBeVisible();
-    expect(
-      screen.getByRole("heading", { name: "A szakmai utam" }),
-    ).toBeVisible();
-    expect(
-      screen.getByRole("heading", { name: "Amit ma vallok" }),
-    ).toBeVisible();
+      screen.getByRole("button", { name: "Honnan indultam" }),
+    ).toHaveAttribute("aria-current", "true");
     expect(screen.getByText("Teszt bekezdés 1.")).toBeVisible();
+  });
+
+  it("switches the visible content when a different subheading tab is clicked", async () => {
+    renderAbout();
+    expect(screen.queryByText("Teszt bekezdés 5.")).not.toBeInTheDocument();
+
+    await userEvent.click(
+      screen.getByRole("button", { name: "Amit ma vallok" }),
+    );
+
     expect(screen.getByText("Teszt bekezdés 5.")).toBeVisible();
+    expect(screen.queryByText("Teszt bekezdés 1.")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Amit ma vallok" }),
+    ).toHaveAttribute("aria-current", "true");
   });
 
   it("shows a photo placeholder when the coach has no aboutImage configured yet", () => {
@@ -111,67 +74,23 @@ describe("About", () => {
     expect(screen.queryByText("Fotó hamarosan")).not.toBeInTheDocument();
   });
 
-  it("renders a placeholder card for a qualification that has no image yet", () => {
+  it("lists the qualifications as plain text under their own tab, with no gallery or images", async () => {
     renderAbout();
-    const pendingCard = screen.getByRole("button", {
-      name: /Pending Qualification/,
-    });
-    expect(within(pendingCard).getByText("Kép hamarosan")).toBeVisible();
-  });
+    const tab = screen.getByRole("button", { name: "Képzettségeim" });
+    expect(screen.queryByText("Test Qualification")).not.toBeInTheDocument();
 
-  it("renders a qualification thumbnail that opens a lightbox on click", async () => {
-    renderAbout();
-    const thumbnail = screen.getByRole("button", {
-      name: /Test Qualification/,
-    });
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    await userEvent.click(tab);
 
-    await userEvent.click(thumbnail);
-
-    const dialog = screen.getByRole("dialog");
-    expect(dialog).toBeVisible();
-    expect(
-      within(dialog).getByRole("img", {
-        name: "Test qualification certificate",
-      }),
-    ).toBeVisible();
-    expect(within(dialog).getByText("Test Issuer · 2024")).toBeVisible();
-    expect(
-      within(dialog).getByRole("link", { name: "PDF megnyitása" }),
-    ).toHaveAttribute("href", "/test-qualification.pdf");
-  });
-
-  it("closes the lightbox and returns focus to the thumbnail on close", async () => {
-    renderAbout();
-    const thumbnail = screen.getByRole("button", {
-      name: /Test Qualification/,
-    });
-    await userEvent.click(thumbnail);
-    await userEvent.click(screen.getByRole("button", { name: "Bezárás" }));
-
+    expect(screen.getByText("Test Qualification")).toBeVisible();
+    expect(screen.getByText("Test Issuer · 2024")).toBeVisible();
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("mounts cleanly on top of Embla without crashing, with no scroll controls since jsdom never measures real overflow", () => {
-    // The actual drag/scroll/click-vs-drag mechanics are Embla Carousel's
-    // responsibility now (see QualificationGallery), not re-tested here --
-    // jsdom computes every element at 0x0, so Embla correctly reports
-    // nothing is scrollable and the prev/next pair stays unmounted. This
-    // just guards against the Embla wiring itself throwing or regressing.
-    renderAbout();
-    expect(
-      screen.queryByRole("button", { name: "Következő képzések" }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: "Előző képzések" }),
-    ).not.toBeInTheDocument();
-  });
-
-  it("omits the qualifications heading and gallery when there are none", () => {
+  it("omits the qualifications tab entirely when there are none", () => {
     renderAbout({ ...testCoachConfig, qualifications: [] });
     expect(
-      screen.queryByText("Képzéseim és végzettségeim"),
+      screen.queryByRole("button", { name: "Képzettségeim" }),
     ).not.toBeInTheDocument();
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 });

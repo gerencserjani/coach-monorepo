@@ -9,17 +9,8 @@ export const testCoachConfig: CoachConfig = {
   heroImage: { src: "/test-hero.webp" },
   communityImage: { src: "/test-community.webp" },
   qualifications: [
-    {
-      image: { src: "/test-qualification.webp" },
-      alt: "Test qualification certificate",
-      label: "Test Qualification",
-      meta: "Test Issuer · 2024",
-      pdfHref: "/test-qualification.pdf",
-    },
-    {
-      alt: "Test qualification without an image yet",
-      label: "Pending Qualification",
-    },
+    { label: "Test Qualification", meta: "Test Issuer · 2024" },
+    { label: "Pending Qualification" },
   ],
   navLinks: [
     { id: "bemutatkozas", labelKey: "common.nav.introduction" },
