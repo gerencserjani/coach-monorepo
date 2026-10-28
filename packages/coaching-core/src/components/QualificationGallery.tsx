@@ -166,7 +166,17 @@ export default function QualificationGallery({
 
       <dialog
         ref={dialogRef}
-        onClose={() => setActiveIndex(null)}
+        // Deliberately NOT clearing activeIndex here: the dialog keeps
+        // animating closed (opacity/scale transition, ~200ms) for a moment
+        // after close() is called, and React re-renders synchronously with
+        // that call. Nulling activeIndex on close emptied {active && ...}
+        // immediately, so what was actually fading out was an empty,
+        // padding-only rounded box (nearly circular at that tiny size, and
+        // bg-bg-card is close enough to the page bg to read as "the same
+        // color") sitting center-screen for the rest of the transition --
+        // not the certificate. Leaving the last item's content in place
+        // until the next openAt() call means the real image fades out
+        // instead.
         onClick={(event) => {
           if (event.target === dialogRef.current) {
             dialogRef.current?.close();
