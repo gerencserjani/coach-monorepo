@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import About from "./About.tsx";
@@ -126,6 +126,47 @@ describe("About", () => {
     await userEvent.click(screen.getByRole("button", { name: "Bezárás" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("shows a scroll-next control once the gallery actually overflows, and scroll-prev after scrolling", async () => {
+    renderAbout();
+    // jsdom never computes real layout, so scrollWidth/clientWidth are
+    // always 0 -- stub them to simulate a gallery wider than its viewport,
+    // then fire the resize listener the component uses to recompute.
+    const scroller = screen.getByTestId("qualification-scroller");
+    Object.defineProperty(scroller, "scrollWidth", {
+      configurable: true,
+      value: 1000,
+    });
+    Object.defineProperty(scroller, "clientWidth", {
+      configurable: true,
+      value: 400,
+    });
+    Object.defineProperty(scroller, "scrollLeft", {
+      configurable: true,
+      writable: true,
+      value: 0,
+    });
+
+    expect(
+      screen.queryByRole("button", { name: "Következő képzések" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent(window, new Event("resize"));
+
+    expect(
+      screen.getByRole("button", { name: "Következő képzések" }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Előző képzések" }),
+    ).not.toBeInTheDocument();
+
+    scroller.scrollLeft = 200;
+    fireEvent(scroller, new Event("scroll"));
+
+    expect(
+      screen.getByRole("button", { name: "Előző képzések" }),
+    ).toBeVisible();
   });
 
   it("omits the qualifications heading and gallery when there are none", () => {

@@ -1,4 +1,10 @@
-import { useRef, useState, type ReactElement } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactElement,
+} from "react";
 import { useTranslation } from "react-i18next";
 import ImagePlaceholder from "./ImagePlaceholder.tsx";
 import type { CoachQualification } from "../CoachConfig.ts";
@@ -6,6 +12,8 @@ import type { CoachQualification } from "../CoachConfig.ts";
 interface QualificationGalleryProps {
   items: CoachQualification[];
 }
+
+const FADE = 36;
 
 export default function QualificationGallery({
   items,
@@ -20,44 +28,137 @@ export default function QualificationGallery({
     dialogRef.current?.showModal();
   };
 
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      setCanScrollPrev(el.scrollLeft > 4);
+      setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [items.length]);
+
+  const scrollByPage = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" });
+  };
+
+  const maskStops = [
+    canScrollPrev ? "transparent" : "black",
+    canScrollPrev ? `black ${FADE}px` : null,
+    canScrollNext ? `black calc(100% - ${FADE}px)` : null,
+    canScrollNext ? "transparent" : "black",
+  ].filter(Boolean);
+  const maskStyle: CSSProperties =
+    canScrollPrev || canScrollNext
+      ? {
+          maskImage: `linear-gradient(to right, ${maskStops.join(", ")})`,
+          WebkitMaskImage: `linear-gradient(to right, ${maskStops.join(", ")})`,
+        }
+      : {};
+
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 xs:grid-cols-3 xl:grid-cols-4">
-        {items.map((item, index) => (
-          <button
-            key={item.alt}
-            type="button"
-            onClick={() => openAt(index)}
-            className="rounded-[18px] border border-line bg-bg-card p-3 text-left transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            <span className="flex aspect-[3/4] items-center justify-center overflow-hidden rounded-[10px]">
-              {item.image ? (
-                <img
-                  src={item.image.src}
-                  srcSet={item.image.srcSet}
-                  alt={item.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-contain"
-                />
-              ) : (
-                <ImagePlaceholder
-                  caption={t("about.qualificationPlaceholder")}
-                />
+      <div className="relative">
+        <div
+          ref={scrollerRef}
+          data-testid="qualification-scroller"
+          style={maskStyle}
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {items.map((item, index) => (
+            <button
+              key={item.alt}
+              type="button"
+              onClick={() => openAt(index)}
+              className="w-[150px] shrink-0 snap-start rounded-[18px] border border-line bg-bg-card p-3 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_10px_24px_var(--shadow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent xs:w-[180px] sm:w-[200px]"
+            >
+              <span className="flex aspect-[3/4] items-center justify-center overflow-hidden rounded-[10px]">
+                {item.image ? (
+                  <img
+                    src={item.image.src}
+                    srcSet={item.image.srcSet}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-contain"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    caption={t("about.qualificationPlaceholder")}
+                  />
+                )}
+              </span>
+              {item.label && (
+                <span className="mt-2 block text-[13px] text-ink-soft">
+                  {item.label}
+                </span>
               )}
-            </span>
-            {item.label && (
-              <span className="mt-2 block text-[13px] text-ink-soft">
-                {item.label}
-              </span>
-            )}
-            {item.meta && (
-              <span className="block text-[12px] text-accent-soft">
-                {item.meta}
-              </span>
-            )}
+              {item.meta && (
+                <span className="block text-[12px] text-accent-soft">
+                  {item.meta}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {canScrollPrev && (
+          <button
+            type="button"
+            onClick={() => scrollByPage(-1)}
+            aria-label={t("about.scrollPrev")}
+            className="absolute left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m15 6-6 6 6 6" />
+            </svg>
           </button>
-        ))}
+        )}
+        {canScrollNext && (
+          <button
+            type="button"
+            onClick={() => scrollByPage(1)}
+            aria-label={t("about.scrollNext")}
+            className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m9 6 6 6-6 6" />
+            </svg>
+          </button>
+        )}
       </div>
 
       <dialog

@@ -50,6 +50,8 @@
     "qualificationsHeading": "Képzéseim és végzettségeim",
     "qualificationPlaceholder": "Kép hamarosan",
     "openPdf": "PDF megnyitása",
+    "scrollPrev": "Előző képzések",
+    "scrollNext": "Következő képzések",
     "closeImage": "Bezárás"
   },
   "services": {

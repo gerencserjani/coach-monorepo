@@ -50,6 +50,8 @@
     "qualificationsHeading": "My trainings and qualifications",
     "qualificationPlaceholder": "Image coming soon",
     "openPdf": "Open PDF",
+    "scrollPrev": "Previous trainings",
+    "scrollNext": "Next trainings",
     "closeImage": "Close"
   },
   "services": {

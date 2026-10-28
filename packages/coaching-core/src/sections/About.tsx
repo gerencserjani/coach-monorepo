@@ -11,6 +11,8 @@ export default function About(): ReactElement {
   const { t } = useTranslation();
   const { qualifications, aboutImage } = useCoachConfig();
   const { ref, className } = useRevealOnScroll<HTMLDivElement>();
+  const { ref: galleryRef, className: galleryClassName } =
+    useRevealOnScroll<HTMLDivElement>();
 
   return (
     <Section id="rolam" className="py-14 xs:py-20 xl:py-[92px] 2xl:py-[120px]">
@@ -59,7 +61,10 @@ export default function About(): ReactElement {
         </div>
 
         {qualifications.length > 0 && (
-          <div className="mt-12 xs:mt-16">
+          <div
+            ref={galleryRef}
+            className={["mt-12 xs:mt-16", galleryClassName].join(" ")}
+          >
             <h3 className="serif mb-6 text-[22px]">
               {t("about.qualificationsHeading")}
             </h3>
