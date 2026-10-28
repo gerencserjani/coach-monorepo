@@ -27,6 +27,10 @@ export interface CoachQualification {
   image?: CoachImage;
   alt: string;
   label?: string;
+  /** Short issuer/date line shown under the label, e.g. "Gordon Training International · 2024". */
+  meta?: string;
+  /** Link to the original PDF, when one exists, offered in the lightbox alongside the preview image. */
+  pdfHref?: string;
 }
 
 export interface CoachContactInfo {

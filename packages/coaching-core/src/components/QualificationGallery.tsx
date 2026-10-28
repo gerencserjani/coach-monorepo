@@ -51,6 +51,11 @@ export default function QualificationGallery({
                 {item.label}
               </span>
             )}
+            {item.meta && (
+              <span className="block text-[12px] text-accent-soft">
+                {item.meta}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -83,13 +88,28 @@ export default function QualificationGallery({
             {active.label && (
               <p className="text-[14px] text-ink-soft">{active.label}</p>
             )}
-            <button
-              type="button"
-              onClick={() => dialogRef.current?.close()}
-              className="rounded-full border border-line px-4 py-1.5 text-sm text-ink transition-opacity duration-200 hover:opacity-85"
-            >
-              {t("about.closeImage")}
-            </button>
+            {active.meta && (
+              <p className="text-[13px] text-accent-soft">{active.meta}</p>
+            )}
+            <div className="flex gap-3">
+              {active.pdfHref && (
+                <a
+                  href={active.pdfHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border border-line px-4 py-1.5 text-sm text-ink transition-opacity duration-200 hover:opacity-85"
+                >
+                  {t("about.openPdf")}
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={() => dialogRef.current?.close()}
+                className="rounded-full border border-line px-4 py-1.5 text-sm text-ink transition-opacity duration-200 hover:opacity-85"
+              >
+                {t("about.closeImage")}
+              </button>
+            </div>
           </div>
         )}
       </dialog>

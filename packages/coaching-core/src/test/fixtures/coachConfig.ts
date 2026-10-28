@@ -13,6 +13,8 @@ export const testCoachConfig: CoachConfig = {
       image: { src: "/test-qualification.webp" },
       alt: "Test qualification certificate",
       label: "Test Qualification",
+      meta: "Test Issuer · 2024",
+      pdfHref: "/test-qualification.pdf",
     },
     {
       alt: "Test qualification without an image yet",

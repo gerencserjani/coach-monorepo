@@ -111,6 +111,10 @@ describe("About", () => {
         name: "Test qualification certificate",
       }),
     ).toBeVisible();
+    expect(within(dialog).getByText("Test Issuer · 2024")).toBeVisible();
+    expect(
+      within(dialog).getByRole("link", { name: "PDF megnyitása" }),
+    ).toHaveAttribute("href", "/test-qualification.pdf");
   });
 
   it("closes the lightbox and returns focus to the thumbnail on close", async () => {
