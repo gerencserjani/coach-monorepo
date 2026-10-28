@@ -4,6 +4,7 @@ import { navLinks, contactLink } from "./content/navLinks";
 import { services } from "./content/services";
 import { freeCallMinutes, priceRows } from "./content/pricing";
 import { communityCtaHref } from "./content/community";
+import { qualifications } from "./content/qualifications";
 import { contactInfo } from "./content/contact";
 import brandLogo from "./assets/brand-logo.webp";
 import heroArt from "./assets/hero-art.webp";
@@ -22,6 +23,7 @@ export const bettiConfig: CoachConfig = {
     src: communityArt,
     srcSet: `${communityArtSmall} 520w, ${communityArt} 700w`,
   },
+  qualifications,
   navLinks,
   contactLink,
   services,

@@ -12,6 +12,7 @@
     },
     "nav": {
       "introduction": "Bemutatkozás",
+      "about": "Rólam",
       "help": "Miben segíthetek",
       "community": "Közösség",
       "prices": "Árak",
@@ -31,7 +32,27 @@
   },
   "quoteBlock": {
     "quote": "„Azért vált számomra különösen fontossá a kommunikáció, mert gyerekként megtapasztaltam, milyen ára lehet annak, amikor két ember már nem tud igazán beszélni egymással.”",
-    "leadIn": "Innen indult az utam a coaching felé — és ma azért dolgozom, hogy másoknak ne kelljen ugyanezt átélniük. [TARTALOM SZÜKSÉGES: szakmai út, képzések, tapasztalat]"
+    "leadIn": "Innen indult az utam a coaching felé — és ma azért dolgozom, hogy másoknak ne kelljen ugyanezt átélniük sem felnőtt, sem gyermek oldalról."
+  },
+  "about": {
+    "kicker": "A saját utam a coachingig",
+    "heading": "Rólam",
+    "photoAlt": "Gerencsér Bernadett portréja",
+    "photoPlaceholder": "Fotó hamarosan",
+    "introHeading": "Honnan indultam",
+    "introParagraph1": "Hogy mi az én belső motivációm? Gyerekként megtapasztaltam milyen elnyomásban élni, milyen nem tudni ki vagyok és mi szeretnék lenni. Az önismereti utamra 28 éves koromban léptem rá, amelyen gyötrelmesen, de végigmeneteltem egyedül. Ma azért dolgozom, hogy másoknak ne kelljen ugyanezt átélniük, vagy hamarabb tudjanak kitörni és segítő támaszt nyújthassak útjuk során.",
+    "introParagraph2": "Szüleim házasságából azt a tanúságot tudtam levonni, hogy milyen kapcsolatot biztosan nem szeretnék, de hogy pontosan mire is vágyom szintén sokáig tartott rájönnöm.",
+    "pathHeading": "A szakmai utam",
+    "pathParagraph": "Mindezek együttesen eredményezték azt, hogy minél többet szeretnék tanulni a szociális kapcsolatokról. Így iratkoztam be az egyetemre és szereztem Szociálpedagógus diplomát a Szegedi Tudományegyetem Juhász Gyula pedagógusképző Karán. Nagyon széleskörű ismeretekre tettem szert, és közben édesanyává is váltam, ezáltal jött egy új kihívás, a karrierváltás. Ezért elvégeztem egy karriercoaching képzést. Megalapítottam a vállalkozásomat, majd tovább szerettem volna mélyíteni az ismereteimet, ezért egy Család és Párkapcsolati Coach képzést is elsajátítottam. Mindezeket kiegészítve vettem részt egy nagyszerű, már-már receptköteles képzésen, ami a Gordon kommunikációs tréning a személyes hatékonyság fejlesztéséért címmel elérhető a mai napig.",
+    "reflectionHeading": "Amit ma vallok",
+    "reflectionParagraph1": "Ezek együtthatójaként ma azt mondhatom, hogy kiegyensúlyozott egyén vagyok, kiegyensúlyozott házasságban, boldog anyaságban élek. Ez persze nem azt jelenti, hogy nincsenek hullámvölgyek, hogy nem ütköztetjük az érdekeinket, vagy hogy nem akadok ki a gyermekemre, de mindezt igyekszünk olyan mederbe terelni, ami mindenki számára egészséges és fenntartható.",
+    "reflectionParagraph2": "Célom, hogy átadjam a tudásom és motiváltságom, mert szentül hiszem, hogy van remény a bomladozó emberi kapcsolatainkban. Az elsődleges kulcs a kommunikációban rejlik, a második az egyén elszántságán és kitartásán.",
+    "qualificationsHeading": "Képzéseim és végzettségeim",
+    "qualificationPlaceholder": "Kép hamarosan",
+    "openPdf": "PDF megnyitása",
+    "scrollPrev": "Előző képzések",
+    "scrollNext": "Következő képzések",
+    "closeImage": "Bezárás"
   },
   "services": {
     "heading": "Miben lehetek a segítségedre?",
@@ -74,7 +95,7 @@
   },
   "community": {
     "kicker": "Anyák egymásért · Nők önmagunkért",
-    "heading": "Légy része egy ítéletmentes, kapcsolódásban gazdag, támogató közösségnek.",
+    "heading": "Légy része egy ítélkezésmentes, kapcsolódásban gazdag, támogató közösségnek.",
     "body": "Támogatni. Kapcsolódni. Őszintén kimondani. Egy olyan hely, ahol nem kell egyedül vinni a terheket — ahol más anyák és nők értik, amit átélsz, és ahol biztonságos térben oszthatod meg a gondolataidat.",
     "cta": "Csatlakozom"
   },
