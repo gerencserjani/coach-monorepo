@@ -1,11 +1,6 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type ReactElement,
-} from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 import { useTranslation } from "react-i18next";
+import useEmblaCarousel from "embla-carousel-react";
 import ImagePlaceholder from "./ImagePlaceholder.tsx";
 import type { CoachQualification } from "../CoachConfig.ts";
 
@@ -28,50 +23,35 @@ export default function QualificationGallery({
     dialogRef.current?.showModal();
   };
 
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  // Embla owns the actual drag/scroll mechanics (mouse, touch, and the
+  // click-vs-drag disambiguation that's genuinely fiddly to get right by
+  // hand -- a plain overflow-x-auto strip doesn't support mouse-drag at
+  // all, so a click-and-drag attempt just registers as a click and opens
+  // the wrong card). align: "center" + startIndex centers the middle
+  // credential on first render.
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    startIndex: Math.floor(items.length / 2),
+  });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
 
   useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-
-    // Start centered on the middle card rather than scrolled all the way
-    // left -- at any viewport width this means a neighbor peeks in on both
-    // sides symmetrically, instead of only ever being cropped on the right.
-    const middleCard = el.children[Math.floor(items.length / 2)];
-    if (middleCard instanceof HTMLElement) {
-      el.scrollLeft = Math.max(
-        0,
-        middleCard.offsetLeft - (el.clientWidth - middleCard.offsetWidth) / 2,
-      );
-    }
-
+    if (!emblaApi) return;
     const update = () => {
-      setCanScrollPrev(el.scrollLeft > 1);
-      setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+      setCanScrollPrev(emblaApi.canScrollPrev());
+      setCanScrollNext(emblaApi.canScrollNext());
     };
     update();
-    el.addEventListener("scroll", update, { passive: true });
-    // A plain window "resize" listener misses anything that changes the
-    // scroller's own box without the viewport changing -- e.g. a web font
-    // finishing its swap and reflowing the card labels by a few px, which
-    // is exactly what made the arrows vanish right at the edge case where
-    // all cards very nearly (but not quite) fit. ResizeObserver watches
-    // the element's real box size directly, whatever the cause.
-    const observer = new ResizeObserver(update);
-    observer.observe(el);
+    emblaApi.on("select", update).on("reInit", update);
     return () => {
-      el.removeEventListener("scroll", update);
-      observer.disconnect();
+      emblaApi.off("select", update).off("reInit", update);
     };
-  }, [items.length]);
+  }, [emblaApi]);
 
-  const scrollByPage = (direction: 1 | -1) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" });
-  };
+  useEffect(() => {
+    emblaApi?.reInit();
+  }, [emblaApi, items.length]);
 
   const maskStops = [
     canScrollPrev ? "transparent" : "black",
@@ -79,103 +59,108 @@ export default function QualificationGallery({
     canScrollNext ? `black calc(100% - ${FADE}px)` : null,
     canScrollNext ? "transparent" : "black",
   ].filter(Boolean);
-  const maskStyle: CSSProperties =
+  const maskImage =
     canScrollPrev || canScrollNext
-      ? {
-          maskImage: `linear-gradient(to right, ${maskStops.join(", ")})`,
-          WebkitMaskImage: `linear-gradient(to right, ${maskStops.join(", ")})`,
-        }
-      : {};
+      ? `linear-gradient(to right, ${maskStops.join(", ")})`
+      : undefined;
 
   return (
     <>
       <div className="relative">
         <div
-          ref={scrollerRef}
-          data-testid="qualification-scroller"
-          style={maskStyle}
-          className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          ref={emblaRef}
+          style={{ maskImage, WebkitMaskImage: maskImage }}
+          className="cursor-grab overflow-hidden active:cursor-grabbing"
         >
-          {items.map((item, index) => (
-            <button
-              key={item.alt}
-              type="button"
-              onClick={() => openAt(index)}
-              className="w-[150px] shrink-0 snap-center rounded-[18px] border border-line bg-bg-card p-3 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_10px_24px_var(--shadow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent xs:w-[180px] sm:w-[200px]"
-            >
-              <span className="flex aspect-[3/4] items-center justify-center overflow-hidden rounded-[10px]">
-                {item.image ? (
-                  <img
-                    src={item.image.src}
-                    srcSet={item.image.srcSet}
-                    alt={item.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-contain"
-                  />
-                ) : (
-                  <ImagePlaceholder
-                    caption={t("about.qualificationPlaceholder")}
-                  />
+          <div className="flex gap-4 py-1">
+            {items.map((item, index) => (
+              <button
+                key={item.alt}
+                type="button"
+                onClick={() => openAt(index)}
+                className="w-[150px] shrink-0 rounded-[18px] border border-line bg-bg-card p-3 text-left transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_10px_24px_var(--shadow)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent xs:w-[180px] sm:w-[200px]"
+              >
+                <span className="flex aspect-[3/4] items-center justify-center overflow-hidden rounded-[10px]">
+                  {item.image ? (
+                    <img
+                      src={item.image.src}
+                      srcSet={item.image.srcSet}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <ImagePlaceholder
+                      caption={t("about.qualificationPlaceholder")}
+                    />
+                  )}
+                </span>
+                {item.label && (
+                  <span className="mt-2 block text-[13px] text-ink-soft">
+                    {item.label}
+                  </span>
                 )}
-              </span>
-              {item.label && (
-                <span className="mt-2 block text-[13px] text-ink-soft">
-                  {item.label}
-                </span>
-              )}
-              {item.meta && (
-                <span className="block text-[12px] text-accent-soft">
-                  {item.meta}
-                </span>
-              )}
-            </button>
-          ))}
+                {item.meta && (
+                  <span className="block text-[12px] text-accent-soft">
+                    {item.meta}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {canScrollPrev && (
-          <button
-            type="button"
-            onClick={() => scrollByPage(-1)}
-            aria-label={t("about.scrollPrev")}
-            className="absolute left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+        {(canScrollPrev || canScrollNext) && (
+          <>
+            {/* Per the WAI-ARIA carousel pattern: prev/next stay mounted and
+                in the tab order always, toggling aria-disabled at the ends,
+                rather than being removed -- removing a focused/just-clicked
+                button can drop focus in some browsers and exposes whatever
+                sits underneath it to an accidental click right away. */}
+            <button
+              type="button"
+              onClick={() => emblaApi?.scrollPrev()}
+              aria-disabled={!canScrollPrev}
+              aria-label={t("about.scrollPrev")}
+              className="absolute left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent aria-disabled:cursor-default aria-disabled:opacity-30 aria-disabled:hover:opacity-30"
             >
-              <path d="m15 6-6 6 6 6" />
-            </svg>
-          </button>
-        )}
-        {canScrollNext && (
-          <button
-            type="button"
-            onClick={() => scrollByPage(1)}
-            aria-label={t("about.scrollNext")}
-            className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m15 6-6 6 6 6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => emblaApi?.scrollNext()}
+              aria-disabled={!canScrollNext}
+              aria-label={t("about.scrollNext")}
+              className="absolute right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg-card/90 text-ink-soft shadow-[0_2px_10px_var(--shadow)] backdrop-blur transition-opacity duration-200 hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent aria-disabled:cursor-default aria-disabled:opacity-30 aria-disabled:hover:opacity-30"
             >
-              <path d="m9 6 6 6-6 6" />
-            </svg>
-          </button>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </>
         )}
       </div>
 
