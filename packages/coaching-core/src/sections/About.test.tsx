@@ -25,6 +25,14 @@ class FakeIntersectionObserver {
   unobserve = vi.fn();
 }
 
+// jsdom doesn't implement ResizeObserver either -- QualificationGallery's
+// scroll-affordance tracking needs the constructor to exist.
+class FakeResizeObserver {
+  observe = vi.fn();
+  disconnect = vi.fn();
+  unobserve = vi.fn();
+}
+
 // jsdom doesn't implement <dialog>'s showModal()/close() at all (not even as
 // a stub) -- polyfill them well enough for QualificationGallery's lightbox:
 // toggle the `open` attribute and fire the `close` event it listens for.
@@ -33,6 +41,7 @@ let originalClose: typeof HTMLDialogElement.prototype.close;
 
 beforeEach(async () => {
   vi.stubGlobal("IntersectionObserver", FakeIntersectionObserver);
+  vi.stubGlobal("ResizeObserver", FakeResizeObserver);
   originalShowModal = HTMLDialogElement.prototype.showModal;
   originalClose = HTMLDialogElement.prototype.close;
   HTMLDialogElement.prototype.showModal = function () {
@@ -132,7 +141,7 @@ describe("About", () => {
     renderAbout();
     // jsdom never computes real layout, so scrollWidth/clientWidth are
     // always 0 -- stub them to simulate a gallery wider than its viewport,
-    // then fire the resize listener the component uses to recompute.
+    // then fire the scroll listener the component uses to recompute.
     const scroller = screen.getByTestId("qualification-scroller");
     Object.defineProperty(scroller, "scrollWidth", {
       configurable: true,
@@ -152,7 +161,7 @@ describe("About", () => {
       screen.queryByRole("button", { name: "Következő képzések" }),
     ).not.toBeInTheDocument();
 
-    fireEvent(window, new Event("resize"));
+    fireEvent(scroller, new Event("scroll"));
 
     expect(
       screen.getByRole("button", { name: "Következő képzések" }),

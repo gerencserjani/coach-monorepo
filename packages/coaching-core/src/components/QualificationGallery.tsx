@@ -48,15 +48,22 @@ export default function QualificationGallery({
     }
 
     const update = () => {
-      setCanScrollPrev(el.scrollLeft > 4);
-      setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+      setCanScrollPrev(el.scrollLeft > 1);
+      setCanScrollNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
     };
     update();
     el.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    // A plain window "resize" listener misses anything that changes the
+    // scroller's own box without the viewport changing -- e.g. a web font
+    // finishing its swap and reflowing the card labels by a few px, which
+    // is exactly what made the arrows vanish right at the edge case where
+    // all cards very nearly (but not quite) fit. ResizeObserver watches
+    // the element's real box size directly, whatever the cause.
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
     return () => {
       el.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      observer.disconnect();
     };
   }, [items.length]);
 
