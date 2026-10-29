@@ -9,6 +9,7 @@ import AvailabilityPage from "./AvailabilityPage.tsx";
 import EventTypesPage from "./EventTypesPage.tsx";
 import SettingsPage from "./SettingsPage.tsx";
 import GoogleStatusPage from "./GoogleStatusPage.tsx";
+import StatsPage from "./StatsPage.tsx";
 
 export default function AdminApp(): ReactElement {
   return (
@@ -24,6 +25,7 @@ export default function AdminApp(): ReactElement {
                 unauthenticated visitors to /admin/login first. */}
             <Route index element={<Navigate to="bookings" replace />} />
             <Route path="bookings" element={<BookingsPage />} />
+            <Route path="stats" element={<StatsPage />} />
             <Route path="availability" element={<AvailabilityPage />} />
             <Route path="event-types" element={<EventTypesPage />} />
             {/* Any authenticated coach, not just ADMIN -- both settings.

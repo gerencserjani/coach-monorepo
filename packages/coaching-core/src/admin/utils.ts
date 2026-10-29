@@ -61,3 +61,10 @@ export function formatDate(isoDate: string): string {
 export function formatPriceHuf(priceHuf: number | null): string | null {
   return formatPriceHufShared(priceHuf, "hu", "Díjmentes");
 }
+
+/** Plain HUF amount formatting for a sum/total (e.g. revenue stats) --
+ * unlike formatPriceHuf, 0 means "zero" here, not "free", so it can't reuse
+ * that helper's "0 or less -> free label" special-casing. */
+export function formatHuf(amount: number): string {
+  return `${new Intl.NumberFormat("hu-HU").format(amount)} Ft`;
+}

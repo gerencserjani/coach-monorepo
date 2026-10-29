@@ -10,6 +10,8 @@ import type {
   AvailabilityOverride,
   Settings,
   GoogleStatus,
+  CoachStats,
+  StatsRange,
 } from "./models";
 import type { components } from "./types.generated";
 
@@ -287,4 +289,13 @@ export const adminApi = {
 
   googleConnectState: () =>
     unwrap<{ state: string }>(apiClient.GET("/admin/google/connect-token")),
+
+  stats: (range: StatsRange) =>
+    unwrap<CoachStats>(
+      apiClient.GET("/coaches/me/stats", {
+        params: {
+          query: { coachId: import.meta.env.VITE_COACH_ID, range },
+        },
+      }),
+    ),
 };
