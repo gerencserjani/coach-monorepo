@@ -1,3 +1,9 @@
+# [1.38.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.3...v1.38.0) (2026-10-29)
+
+### Features
+
+- **scripts:** add automated contrast-check for coach palettes ([79d6167](https://github.com/gerencserjani/coach-monorepo/commit/79d61670622abfd4a1c13fffc89c49bbc44b3cfe)), closes [#101](https://github.com/gerencserjani/coach-monorepo/issues/101)
+
 ## [1.37.3](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.2...v1.37.3) (2026-10-29)
 
 ### Bug Fixes
