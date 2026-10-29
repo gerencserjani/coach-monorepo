@@ -114,21 +114,22 @@ emails an accept-invite link. The resulting coach id is this app's
 - DNS for the real domain, pointed at Vercel.
 - Add both the apex and `www` domains to the backend's `AllowedOrigin`
   allow-list (see `coach-calendar`'s own `CONTEXT.md`).
-- **The Ignored Build Step is already handled** -- every `apps/*`
-  `vercel.json` sets `"ignoreCommand": "node ../../scripts/vercel-ignore-build-step.mjs"`
-  (copied verbatim by `create-coach-app.mjs`, nothing to add per app).
-  Vercel's own "Skip deployments when there are no changes to the root
-  directory or its dependencies" toggle is **not sufficient on its own**:
-  it infers "dependencies" from the package manager's dependency graph,
-  but `apps/*` consume `@coaching/core` through a Vite/TS path alias (see
-  `vite.config.ts`'s own comment on why), not a real `package.json`
-  dependency entry -- so Vercel has no declared edge telling it that a
-  `packages/coaching-core` change affects any given app, and would likely
-  skip a deploy that should have happened. `scripts/vercel-ignore-build-step.mjs`
-  covers that gap with Nx's own affected-detection, which reads the real
-  import graph instead of `package.json`, and reads each app's project
-  name from its own `package.json` at build time rather than needing it
-  hardcoded per app.
+- **Skip-unaffected-builds is already handled, no script needed** -- every
+  `apps/*` `package.json` declares `"@coaching/core": "*"` under
+  `dependencies` (copied verbatim by `create-coach-app.mjs`, nothing to add
+  per app). `apps/*` still _resolve_ `@coaching/core` through a Vite/TS path
+  alias at build time (see `vite.config.ts`'s own comment on why -- that
+  part is unchanged), but the `package.json` entry gives Vercel's own
+  workspace-dependency-graph a real, declared edge from the app to the
+  package. That satisfies Vercel's built-in "skip deployments when there
+  are no changes to the root directory or its dependencies" feature (see
+  https://vercel.com/docs/monorepos#skipping-unaffected-projects), which
+  then handles this automatically -- no custom `ignoreCommand`, no Nx
+  invocation during the build, and unlike a custom `ignoreCommand`'s exit-0
+  path, a Vercel-side skip doesn't consume a concurrent build slot. (A
+  previous version of this used a custom Nx-based `ignoreCommand` script;
+  it was removed in #104 because `npx nx` isn't reliable in the
+  pre-install Ignored Build Step phase -- see that issue for the history.)
 
 ## 7. CI/release workflows -- already generic, nothing to do
 
