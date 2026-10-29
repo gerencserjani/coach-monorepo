@@ -1,3 +1,9 @@
+## [1.40.1](https://github.com/gerencserjani/coach-monorepo/compare/v1.40.0...v1.40.1) (2026-10-29)
+
+### Bug Fixes
+
+- rely on Vercel's native affected-detection instead of a custom Nx ignoreCommand script ([92ad803](https://github.com/gerencserjani/coach-monorepo/commit/92ad803d4a9f7337915c1d7f3856790cb215fdc1)), closes [#104](https://github.com/gerencserjani/coach-monorepo/issues/104) [#104](https://github.com/gerencserjani/coach-monorepo/issues/104)
+
 # [1.40.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.39.0...v1.40.0) (2026-10-29)
 
 ### Bug Fixes
