@@ -1,3 +1,9 @@
+## [1.37.2](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.1...v1.37.2) (2026-10-29)
+
+### Bug Fixes
+
+- **about:** justify the About section's body text ([64e7402](https://github.com/gerencserjani/coach-monorepo/commit/64e74026d0aaf2ea0ada31c504f9c127b3b88b70))
+
 ## [1.37.1](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.0...v1.37.1) (2026-10-28)
 
 ### Bug Fixes
