@@ -95,7 +95,7 @@ export default function About(): ReactElement {
                   </button>
                 ))}
               </div>
-              <div className="space-y-5 text-[17px] text-ink-soft">
+              <div className="space-y-5 text-justify text-[17px] text-ink-soft">
                 {activeTab.content}
               </div>
             </div>
