@@ -15,6 +15,6 @@ export const qualifications: CoachQualification[] = [
   },
   {
     label: "Be Your Best Kapcsolati és Kommunikációs tréning",
-    meta: "Gordon Kiadó Magyarország Kft. és Gordon Training International · 2024",
+    meta: "Gordon Training International · 2024",
   },
 ];
