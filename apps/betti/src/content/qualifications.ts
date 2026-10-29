@@ -1,21 +1,20 @@
 import type { CoachQualification } from "@coaching/core";
 
 export const qualifications: CoachQualification[] = [
-  { label: "Szociálpedagógus diploma (SZTE)" },
   {
-    label: "Karriercoaching képzés",
+    label: "Szociálpedagógus",
+    meta: "Szegedi Tudományegyetem Juhász Gyula Pedagógusképző Kar · 2024",
+  },
+  {
+    label: "Karriercoach",
     meta: "Coaching Centrum · 2024",
   },
   {
-    label: "Család és Párkapcsolati Coach képzés",
+    label: "Család és Párkapcsolati Coach",
     meta: "Coaching & Love Academy · 2025",
   },
   {
-    label: "Gordon kommunikációs tréning – Tanúsítvány",
-    meta: "Gordon Kiadó Magyarország Kft. · 2024",
-  },
-  {
-    label: "Gordon kommunikációs tréning – Oklevél",
+    label: "Be Your Best Kapcsolati és Kommunikációs tréning",
     meta: "Gordon Training International · 2024",
   },
 ];
