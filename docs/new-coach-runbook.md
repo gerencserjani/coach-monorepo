@@ -78,11 +78,11 @@ dev and the hosting platform's dashboard for production, same as Betti's.
 If the new coach picks different brand colors (`src/index.css`'s
 `:root`/`[data-theme="dark"]` custom properties), re-check contrast --
 `--ink-soft` on `--bg-panel` has already had to be nudged once for this
-exact reason (see that variable's own comment in `index.css`). A tool like
-[WebAIM's contrast checker](https://webaim.org/resources/contrastchecker/)
-against each `ink`/`ink-soft` + `bg`/`bg-card`/`bg-panel` pairing, in both
-light and dark mode, covers it -- no tooling built for this yet, do it by
-hand for now.
+exact reason (see that variable's own comment in `index.css`). Run
+`npm run check-contrast -- <coach-slug>` (or with no slug to check every
+app) -- it computes the WCAG contrast ratio for each `ink`/`ink-soft` +
+`bg`/`bg-card`/`bg-panel` pairing, in both light and dark mode, and fails
+with a readable message if any pairing drops below the 4.5:1 AA minimum.
 
 ## 5. Backend: create the Coach
 
