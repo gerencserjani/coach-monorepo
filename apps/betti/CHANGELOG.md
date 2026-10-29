@@ -1,3 +1,9 @@
+## [1.37.3](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.2...v1.37.3) (2026-10-29)
+
+### Bug Fixes
+
+- **contact:** strip www. prefix from the derived contact email domain ([c37ea48](https://github.com/gerencserjani/coach-monorepo/commit/c37ea486adad7a7f8931a47af1cd53f865325ae7))
+
 ## [1.37.2](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.1...v1.37.2) (2026-10-29)
 
 ### Bug Fixes
