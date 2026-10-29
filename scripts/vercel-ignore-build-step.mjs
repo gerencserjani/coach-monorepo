@@ -25,9 +25,21 @@ const { name: projectName } = JSON.parse(
 );
 const { VERCEL_GIT_PREVIOUS_SHA, VERCEL_GIT_COMMIT_SHA } = process.env;
 
-if (!VERCEL_GIT_PREVIOUS_SHA) {
+// Logged unconditionally (not just on the early-exit paths below) so a
+// real Vercel run's Ignored Build Step output always shows exactly what
+// this saw, even when it goes on to the affected-check -- this is the
+// only place that output is visible for debugging a wrong skip/build.
+console.log(
+  `${projectName}: VERCEL_GIT_PREVIOUS_SHA=${VERCEL_GIT_PREVIOUS_SHA || "(empty)"} VERCEL_GIT_COMMIT_SHA=${VERCEL_GIT_COMMIT_SHA || "(empty)"}`,
+);
+
+// Both must be real values, not just VERCEL_GIT_PREVIOUS_SHA -- an empty
+// VERCEL_GIT_COMMIT_SHA (e.g. "Automatically expose System Environment
+// Variables" unchecked for this project) would otherwise pass nx a
+// `--head=` with nothing after it instead of actually omitting the flag.
+if (!VERCEL_GIT_PREVIOUS_SHA || !VERCEL_GIT_COMMIT_SHA) {
   console.log(
-    "No previous deployment to diff against (first deploy, or history was rewritten) -- building.",
+    "Missing VERCEL_GIT_PREVIOUS_SHA and/or VERCEL_GIT_COMMIT_SHA (first deploy, history was rewritten, or System Environment Variables aren't exposed to this project) -- building to be safe.",
   );
   process.exit(1);
 }
@@ -39,6 +51,7 @@ try {
     { encoding: "utf8" },
   );
   affected = JSON.parse(output);
+  console.log(`Affected projects: ${JSON.stringify(affected)}`);
 } catch (err) {
   console.error(
     "Could not determine Nx's affected projects -- building to be safe.",
