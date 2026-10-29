@@ -41,12 +41,12 @@
     "photoPlaceholder": "Photo coming soon",
     "introHeading": "Where I started",
     "introParagraph1": "Test paragraph 1.",
-    "introParagraph2": "Test paragraph 2.",
     "pathHeading": "My professional path",
     "pathParagraph": "Test paragraph 3.",
     "reflectionHeading": "What I believe today",
     "reflectionParagraph1": "Test paragraph 4.",
     "reflectionParagraph2": "Test paragraph 5.",
+    "reflectionParagraph3": "Test paragraph 6.",
     "qualificationsHeading": "Qualifications"
   },
   "services": {

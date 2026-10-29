@@ -20,12 +20,7 @@ export default function About(): ReactElement {
   const tabs: Tab[] = [
     {
       label: t("about.introHeading"),
-      content: (
-        <>
-          <p>{t("about.introParagraph1")}</p>
-          <p>{t("about.introParagraph2")}</p>
-        </>
-      ),
+      content: <p>{t("about.introParagraph1")}</p>,
     },
     {
       label: t("about.pathHeading"),
@@ -37,6 +32,7 @@ export default function About(): ReactElement {
         <>
           <p>{t("about.reflectionParagraph1")}</p>
           <p>{t("about.reflectionParagraph2")}</p>
+          <p>{t("about.reflectionParagraph3")}</p>
         </>
       ),
     },
