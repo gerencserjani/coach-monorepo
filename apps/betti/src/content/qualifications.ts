@@ -2,11 +2,11 @@ import type { CoachQualification } from "@coaching/core";
 
 export const qualifications: CoachQualification[] = [
   {
-    label: "Szociálpedagógus diploma",
+    label: "Szociálpedagógus",
     meta: "Szegedi Tudományegyetem Juhász Gyula Pedagógusképző Kar · 2024",
   },
   {
-    label: "Karriercoaching",
+    label: "Karriercoach",
     meta: "Coaching Centrum · 2024",
   },
   {
