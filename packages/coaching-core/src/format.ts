@@ -18,3 +18,6 @@ export function formatPriceHuf(
   const locale = language.startsWith("hu") ? "hu-HU" : "en-US";
   return `${new Intl.NumberFormat(locale).format(priceHuf)} HUF`;
 }
+
+// #104 verification probe: a coaching-core-only change (this PR touches no
+// apps/* files) should still trigger a betti-coaching Vercel preview build.
