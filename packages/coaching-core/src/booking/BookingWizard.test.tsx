@@ -4,6 +4,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { server } from "../test/server";
+
+const { trackMock } = vi.hoisted(() => ({ trackMock: vi.fn() }));
+vi.mock("@vercel/analytics/react", () => ({ track: trackMock }));
 import BookingWizard from "./BookingWizard";
 import CoachConfigProvider from "../CoachConfigProvider.tsx";
 import { testCoachConfig } from "../test/fixtures/coachConfig.ts";
@@ -69,6 +72,7 @@ beforeEach(async () => {
 
 afterEach(() => {
   vi.useRealTimers();
+  trackMock.mockClear();
 });
 
 describe("BookingWizard", () => {
@@ -172,6 +176,83 @@ describe("BookingWizard", () => {
       clientEmail: "teszt@example.com",
       clientPhone: "+36301234567",
     });
+  });
+
+  it("fires a booking_step_viewed event with the step name on every step transition", async () => {
+    const user = userEvent.setup({
+      advanceTimers: (ms) => vi.advanceTimersByTime(ms),
+    });
+    server.use(
+      http.get(`${API_URL}/event-types`, () => HttpResponse.json([eventType])),
+      http.get(`${API_URL}/slots`, () => HttpResponse.json([slot])),
+      http.post(`${API_URL}/bookings`, async ({ request }) => {
+        const body = (await request.json()) as Record<string, unknown>;
+        const booking: BookingWithRelations = {
+          id: "booking-1",
+          eventTypeId: eventType.id,
+          coachId: "coach-1",
+          startAt: slot.startAt,
+          endAt: slot.endAt,
+          location: "GOOGLE_MEET",
+          clientName: body.clientName as string,
+          clientEmail: body.clientEmail as string,
+          clientPhone: body.clientPhone as string,
+          clientNote: null,
+          locale: "hu",
+          status: "CONFIRMED",
+          cancelledBy: null,
+          cancellationReason: null,
+          manageToken: "token-1",
+          googleEventId: null,
+          meetLink: "https://meet.google.com/abc-defg-hij",
+          createdAt: "2026-06-01T09:00:00.000Z",
+          updatedAt: "2026-06-01T09:00:00.000Z",
+          eventType,
+          coach: {
+            id: "coach-1",
+            name: "Teszt Coach",
+            email: "coach@example.com",
+            role: "ADMIN",
+            preferredLocale: "hu",
+            createdAt: "2026-01-01T00:00:00.000Z",
+            updatedAt: "2026-01-01T00:00:00.000Z",
+          },
+        };
+        return HttpResponse.json(booking, { status: 201 });
+      }),
+    );
+
+    renderWizard();
+    await screen.findByText("Első konzultáció");
+
+    await user.click(await screen.findByRole("button", { name: "20" }));
+    await user.click(await screen.findByRole("button", { name: /10:00/ }));
+
+    const [nameInput, emailInput] = screen.getAllByRole("textbox");
+    await user.type(nameInput, "Teszt Elek");
+    await user.type(emailInput, "teszt@example.com");
+    const phoneField =
+      document.querySelector<HTMLInputElement>(".phone-input input")!;
+    await user.type(phoneField, "301234567");
+
+    const submitButton = screen.getByRole("button", {
+      name: /időpont lefoglalása|foglalás/i,
+    });
+    await waitFor(() => expect(submitButton).toBeEnabled());
+    await user.click(submitButton);
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole("heading", { name: /foglalás megerősítve/i }),
+      ).toBeInTheDocument(),
+    );
+
+    // The single-service fixture auto-selects its only event type, so the
+    // wizard starts straight on "slot" rather than an "event_type" screen.
+    const steps = trackMock.mock.calls.map(
+      ([, properties]) => (properties as { step: string }).step,
+    );
+    expect(steps).toEqual(["slot", "details", "confirm"]);
   });
 
   it("shows a friendly error and stays on the form if booking creation fails", async () => {
