@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.38.0...v1.39.0) (2026-10-29)
+
+### Features
+
+- **booking:** track booking wizard step transitions via analytics ([173586f](https://github.com/gerencserjani/coach-monorepo/commit/173586f345c417f3a71cc8519111648bf20e187e)), closes [#103](https://github.com/gerencserjani/coach-monorepo/issues/103)
+- **deploy:** add Ignored Build Step script for coach Vercel projects ([e68b22b](https://github.com/gerencserjani/coach-monorepo/commit/e68b22b283b13d5f35538a4d1ea19cb9f1789605)), closes [#104](https://github.com/gerencserjani/coach-monorepo/issues/104)
+
 # [1.38.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.37.3...v1.38.0) (2026-10-29)
 
 ### Features
