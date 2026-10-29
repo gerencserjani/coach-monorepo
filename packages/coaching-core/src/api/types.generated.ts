@@ -132,6 +132,22 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/coaches/pending-invites": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["CoachesController_findPendingInvites"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/coaches/me": {
     parameters: {
       query?: never;
@@ -146,6 +162,22 @@ export interface paths {
     options?: never;
     head?: never;
     patch: operations["CoachesController_updateMe"];
+    trace?: never;
+  };
+  "/coaches/me/stats": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["CoachesController_getStats"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
     trace?: never;
   };
   "/coaches/me/password": {
@@ -538,6 +570,22 @@ export interface components {
       token: string;
       newPassword: string;
     };
+    SettingsResponseDto: {
+      coachId: string;
+      businessAddress: string;
+      cancellationNoticeHours: number;
+      businessTimezone: string;
+      /** @description Null means this coach hasn't verified a Resend domain yet -- see Settings.emailFrom. */
+      emailFrom: string | null;
+      /** @description Null falls back to Coach.name -- see Settings.brandName. */
+      brandName: string | null;
+      /** @description Null omits the tagline line entirely -- see Settings.brandTagline. */
+      brandTagline: string | null;
+      /** @description Null falls back to the default email palette -- see Settings.emailBrandPalette. */
+      emailBrandPalette: Record<string, never> | null;
+      /** Format: date-time */
+      updatedAt: string;
+    };
     UpdateSettingsDto: {
       businessAddress?: string;
       cancellationNoticeHours?: number;
@@ -572,6 +620,22 @@ export interface components {
     SetFrontendUrlDto: {
       /** Format: uri */
       frontendUrl: string;
+    };
+    EventTypeResponseDto: {
+      id: string;
+      coachId: string;
+      title: string;
+      description: string | null;
+      durationMinutes: number;
+      locations: ("IN_PERSON" | "GOOGLE_MEET" | "PHONE")[];
+      /** @description Whole HUF amount. Null means no price is shown at all; see EventType.price. */
+      price: number | null;
+      position: number;
+      isActive: boolean;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
     };
     CreateEventTypeDto: {
       title: string;
@@ -610,6 +674,11 @@ export interface components {
       endMinute?: number;
     };
     UpdateAvailabilityOverrideDto: Record<string, never>;
+    SlotResponseDto: {
+      coachId: string;
+      startAt: string;
+      endAt: string;
+    };
     CreateBookingDto: {
       eventTypeId: string;
       startAt: string;
@@ -622,6 +691,52 @@ export interface components {
       clientNote?: string;
       /** @enum {string} */
       locale: "hu" | "en";
+    };
+    BookingCoachResponseDto: {
+      id: string;
+      email: string;
+      name: string;
+      preferredLocale: string;
+      /** @enum {string} */
+      role: "ADMIN" | "COACH";
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      /** Format: date-time */
+      sessionsRevokedAt: string | null;
+      frontendUrl: string | null;
+    };
+    BookingResponseDto: {
+      id: string;
+      eventTypeId: string;
+      coachId: string;
+      /** Format: date-time */
+      startAt: string;
+      /** Format: date-time */
+      endAt: string;
+      /** @enum {string} */
+      location: "IN_PERSON" | "GOOGLE_MEET" | "PHONE";
+      clientName: string;
+      clientEmail: string;
+      clientPhone: string;
+      clientNote: string | null;
+      locale: string;
+      /** @enum {string} */
+      status: "CONFIRMED" | "CANCELLED";
+      /** @enum {string|null} */
+      cancelledBy: "COACH" | "CLIENT" | null;
+      cancellationReason: string | null;
+      manageToken: string;
+      googleEventId: string | null;
+      meetLink: string | null;
+      originUrl: string | null;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
+      eventType: components["schemas"]["EventTypeResponseDto"];
+      coach: components["schemas"]["BookingCoachResponseDto"];
     };
     ClientCancelBookingDto: {
       reason?: string;
@@ -796,7 +911,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": components["schemas"]["SettingsResponseDto"];
+        };
       };
     };
   };
@@ -834,7 +951,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": Record<string, never>[];
+        };
       };
     };
   };
@@ -856,6 +975,25 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  CoachesController_findPendingInvites: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": Record<string, never>[];
+        };
       };
     };
   };
@@ -894,6 +1032,28 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  CoachesController_getStats: {
+    parameters: {
+      query?: {
+        coachId?: string;
+        range?: "7d" | "30d" | "90d" | "all";
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": Record<string, never>;
+        };
       };
     };
   };
@@ -996,7 +1156,9 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": components["schemas"]["EventTypeResponseDto"][];
+        };
       };
     };
   };
@@ -1305,7 +1467,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": Record<string, never>[];
+          "application/json": components["schemas"]["SlotResponseDto"][];
         };
       };
     };
@@ -1425,7 +1587,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": Record<string, never>;
+          "application/json": components["schemas"]["BookingResponseDto"];
         };
       };
     };

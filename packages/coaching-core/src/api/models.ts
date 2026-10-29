@@ -125,3 +125,11 @@ export interface GoogleStatus {
   connectedEmail?: string;
   connectedAt?: string;
 }
+
+export type StatsRange = "7d" | "30d" | "90d" | "all";
+
+export interface CoachStats {
+  range: StatsRange;
+  bookingCount: number;
+  revenueHuf: number;
+}

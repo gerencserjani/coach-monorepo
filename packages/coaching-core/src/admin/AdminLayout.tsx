@@ -6,6 +6,7 @@ import { useCoachConfig } from "../CoachConfig.ts";
 
 const navItems = [
   { to: "/admin/bookings", label: "Foglalások" },
+  { to: "/admin/stats", label: "Statisztika" },
   { to: "/admin/availability", label: "Elérhetőség" },
   { to: "/admin/event-types", label: "Szolgáltatások" },
   { to: "/admin/google", label: "Google Naptár" },
