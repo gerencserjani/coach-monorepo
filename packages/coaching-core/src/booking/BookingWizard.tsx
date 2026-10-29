@@ -1,6 +1,7 @@
-import { useMemo, useState, type ReactElement } from "react";
+import { useEffect, useMemo, useState, type ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { track } from "@vercel/analytics/react";
 import type {
   BookingWithRelations,
   LocationType,
@@ -123,6 +124,24 @@ export default function BookingWizard(): ReactElement {
     setConfirmedBooking(null);
     createBooking.reset();
   };
+
+  // null while there's nothing meaningful to report yet (still loading, or
+  // no services configured) -- the effect below skips firing in that case.
+  const step = confirmedBooking
+    ? "confirm"
+    : showDetails
+      ? "details"
+      : effectiveEventType
+        ? "slot"
+        : eventTypes && eventTypes.length > 0
+          ? "event_type"
+          : null;
+
+  useEffect(() => {
+    if (step) {
+      track("booking_step_viewed", { step });
+    }
+  }, [step]);
 
   if (confirmedBooking) {
     return (
