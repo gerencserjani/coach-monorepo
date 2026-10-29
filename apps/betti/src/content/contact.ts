@@ -1,7 +1,9 @@
 import { siteUrl } from "./site";
 
 const mapsQuery = "Üstökös utca, Szeged";
-const siteHostname = new URL(siteUrl).hostname;
+// Strip a "www." prefix: the email domain shouldn't carry it even when the
+// site itself is served under www.
+const siteHostname = new URL(siteUrl).hostname.replace(/^www\./, "");
 
 export const contactInfo = {
   address: "6724 Szeged, Üstökös utca",
