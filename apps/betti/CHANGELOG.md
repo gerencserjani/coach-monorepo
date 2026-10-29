@@ -1,3 +1,13 @@
+# [1.40.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.39.0...v1.40.0) (2026-10-29)
+
+### Bug Fixes
+
+- **scripts:** fail open when VERCEL_GIT_COMMIT_SHA is missing too ([c3d7c80](https://github.com/gerencserjani/coach-monorepo/commit/c3d7c805c05b4fc663b8da0a4c2cd7f50c17eddd)), closes [#104](https://github.com/gerencserjani/coach-monorepo/issues/104)
+
+### Features
+
+- **admin:** add a Statistics page with booking volume + revenue stats ([6d80544](https://github.com/gerencserjani/coach-monorepo/commit/6d8054429f35db6205b804bb26241b70f9c9dd81)), closes [#68](https://github.com/gerencserjani/coach-monorepo/issues/68) [#55](https://github.com/gerencserjani/coach-monorepo/issues/55)
+
 # [1.39.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.38.0...v1.39.0) (2026-10-29)
 
 ### Features
