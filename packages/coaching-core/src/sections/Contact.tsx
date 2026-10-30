@@ -5,6 +5,7 @@ import Container from "../components/Container.tsx";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { useCoachConfig } from "../CoachConfig.ts";
 import PinIcon from "../components/icons/PinIcon";
+import WhatsAppIcon from "../components/icons/WhatsAppIcon";
 
 const linkClassName =
   "border-b border-line text-ink no-underline transition-colors duration-200 hover:border-accent hover:text-accent";
@@ -81,6 +82,25 @@ export default function Contact(): ReactElement {
                 </a>
               </div>
             </div>
+
+            {contactInfo.whatsappUrl && (
+              <div>
+                <div className="mb-1.5 text-[13.5px] text-ink-soft">
+                  {t("contact.labels.whatsapp")}
+                </div>
+                <div className="serif flex items-center gap-2 text-[19px]">
+                  <WhatsAppIcon size={19} className="shrink-0 text-accent" />
+                  <a
+                    href={contactInfo.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClassName}
+                  >
+                    {contactInfo.phoneDisplay}
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </Container>

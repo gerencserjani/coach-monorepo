@@ -10,6 +10,7 @@ import {
   Booking,
   Contact,
   Footer,
+  WhatsAppFab,
 } from "@coaching/core";
 
 export default function PublicSite() {
@@ -32,6 +33,7 @@ export default function PublicSite() {
         <Contact />
       </main>
       <Footer />
+      <WhatsAppFab />
     </>
   );
 }
