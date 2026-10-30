@@ -4,6 +4,7 @@ import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import type { Service } from "../CoachConfig.ts";
 
 export default function ServiceRow({
+  id,
   keyPrefix,
   hasChips,
 }: Service): ReactElement {
@@ -19,8 +20,9 @@ export default function ServiceRow({
   return (
     <div
       ref={ref}
+      id={id}
       className={[
-        "grid grid-cols-1 gap-5 border-t border-line py-8 last:border-b xs:py-10 xl:py-14 sm:grid-cols-[0.55fr_1fr] sm:gap-14",
+        "scroll-mt-[92px] grid grid-cols-1 gap-5 border-t border-line py-8 last:border-b xs:py-10 xl:py-14 sm:grid-cols-[0.55fr_1fr] sm:gap-14",
         className,
       ].join(" ")}
     >

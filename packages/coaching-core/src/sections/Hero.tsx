@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import Section from "../components/Section.tsx";
 import Container from "../components/Container.tsx";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon";
 import { useCoachConfig } from "../CoachConfig.ts";
 
 const topics = ["partnership", "communication", "parenting"] as const;
@@ -26,12 +27,17 @@ export default function Hero(): ReactElement {
             </p>
             <div className="mt-2 flex flex-wrap gap-x-3.5 gap-y-2.5">
               {topics.map((topic) => (
-                <span
+                <a
                   key={topic}
-                  className="rounded-full border border-line bg-bg-card px-4 py-2 text-sm text-ink-soft"
+                  href={`#${topic}`}
+                  className="group flex items-center gap-1.5 rounded-full border border-line bg-bg-card px-4 py-2 text-sm text-ink-soft no-underline transition-colors duration-200 hover:border-accent hover:text-accent"
                 >
                   {t(`hero.topics.${topic}`)}
-                </span>
+                  <ArrowRightIcon
+                    size={14}
+                    className="shrink-0 opacity-60 transition-opacity duration-200 group-hover:opacity-100"
+                  />
+                </a>
               ))}
             </div>
           </div>
