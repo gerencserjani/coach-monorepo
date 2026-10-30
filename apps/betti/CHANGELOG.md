@@ -1,3 +1,9 @@
+# [1.42.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.41.0...v1.42.0) (2026-10-30)
+
+### Features
+
+- **betti:** add WhatsApp contact link, icon, and floating button ([0138578](https://github.com/gerencserjani/coach-monorepo/commit/0138578664f488f7fc1f551303e325626df71717))
+
 # [1.41.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.40.1...v1.41.0) (2026-10-30)
 
 ### Features
