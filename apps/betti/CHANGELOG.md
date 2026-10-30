@@ -1,3 +1,9 @@
+# [1.41.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.40.1...v1.41.0) (2026-10-30)
+
+### Features
+
+- **betti:** add memberships badges to the About "Tagsagaim" tab ([76ab80a](https://github.com/gerencserjani/coach-monorepo/commit/76ab80af22e6ccf1b8c6ec4c08e75cd9f775d72e))
+
 ## [1.40.1](https://github.com/gerencserjani/coach-monorepo/compare/v1.40.0...v1.40.1) (2026-10-29)
 
 ### Bug Fixes
