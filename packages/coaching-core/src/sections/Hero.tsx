@@ -18,9 +18,6 @@ export default function Hero(): ReactElement {
       <Container>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.8fr]">
           <div>
-            <p className="serif mb-[18px] text-[15px] text-accent italic">
-              {t("hero.kicker")}
-            </p>
             <h1 className="mb-5 text-[clamp(38px,5.4vw,60px)] leading-[1.06]">
               <Trans i18nKey="hero.headline" components={{ br: <br /> }} />
             </h1>
