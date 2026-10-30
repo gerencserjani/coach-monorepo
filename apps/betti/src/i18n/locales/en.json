@@ -26,7 +26,8 @@
     "topics": {
       "partnership": "Relationships",
       "communication": "Assertive communication",
-      "parenting": "Parenting atmosphere"
+      "parenting": "Parenting atmosphere",
+      "career": "Career"
     }
   },
   "quoteBlock": {
@@ -51,7 +52,7 @@
   },
   "services": {
     "heading": "How can I help you?",
-    "intro": "Three areas, three life situations — see which one you recognize yourself in.",
+    "intro": "Four areas, four life situations — see which one you recognize yourself in.",
     "items": {
       "partnership": {
         "tag": "Relationship",
@@ -84,6 +85,19 @@
           "\"How do I say no without it turning into a fight?\"",
           "\"My partner and I don't agree on parenting either.\"",
           "\"What atmosphere are we creating at home?\""
+        ]
+      },
+      "career": {
+        "tag": "Career",
+        "title": "Career coaching",
+        "situation": "When you feel stuck in your career and don't know which way to go.",
+        "chips": [
+          "I don't know what I want to do",
+          "I'd like to change, but I'm afraid of the uncertainty",
+          "I've lost motivation in my work",
+          "I don't know how to really use my abilities",
+          "I'd like to return to work, but don't know how to start",
+          "It's hard for me to make a decision about my career"
         ]
       }
     }

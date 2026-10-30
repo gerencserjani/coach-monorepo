@@ -26,7 +26,8 @@
     "topics": {
       "partnership": "Párkapcsolat",
       "communication": "Asszertív kommunikáció",
-      "parenting": "Szülői légkör"
+      "parenting": "Szülői légkör",
+      "career": "Karrier"
     }
   },
   "quoteBlock": {
@@ -51,7 +52,7 @@
   },
   "services": {
     "heading": "Miben lehetek a segítségedre?",
-    "intro": "Három terület, három élethelyzet — nézd meg, melyikben ismersz magadra.",
+    "intro": "Négy terület, négy élethelyzet — nézd meg, melyikben ismersz magadra.",
     "items": {
       "partnership": {
         "tag": "Párkapcsolat",
@@ -84,6 +85,19 @@
           "„Hogyan mondjak nemet úgy, hogy ne legyen belőle harc?”",
           "„A párommal sem értünk egyet a gyereknevelésben.”",
           "„Milyen légkört teremtünk otthon?”"
+        ]
+      },
+      "career": {
+        "tag": "Karrier",
+        "title": "Karriercoaching",
+        "situation": "Amikor elakadtál a pályádon, és nem tudod, merre tovább.",
+        "chips": [
+          "nem tudom, mit szeretnék csinálni",
+          "váltanék, de félek a bizonytalanságtól",
+          "elvesztettem a motivációmat a munkámban",
+          "nem tudom, hogyan használjam ki igazán a képességeimet",
+          "visszatérnék a munka világába, de nem tudom, hogyan kezdjek hozzá",
+          "nehezen hozok döntést a karrieremmel kapcsolatban"
         ]
       }
     }
