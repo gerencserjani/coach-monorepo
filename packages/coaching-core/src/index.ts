@@ -39,6 +39,7 @@ export {
   type PriceRow,
   type CoachImage,
   type CoachQualification,
+  type CoachMembership,
   type CoachContactInfo,
 } from "./CoachConfig.ts";
 export { default as CoachConfigProvider } from "./CoachConfigProvider.tsx";
