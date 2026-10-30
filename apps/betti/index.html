@@ -13,6 +13,9 @@
          keeps fallback-font text visible in the meantime, so this only
          trades a brief flash of the fallback font for a much earlier first
          paint. <noscript> covers the no-JS case. -->
+    <!-- The onload attribute's exact text is also allow-listed by hash in
+         vercel.json's CSP (script-src-attr) -- same regeneration note as
+         below applies if this line changes. -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,560;1,9..144,420&family=Work+Sans:wght@350;400;500;600&display=swap"
@@ -80,6 +83,11 @@
         }
       }
     </script>
+    <!-- If this script's content changes, the matching 'sha256-...' entry in
+         vercel.json's Content-Security-Policy-Report-Only script-src must be
+         regenerated (CSP allow-lists this exact inline script by hash,
+         computed from the deployed file's LF line endings, not the local
+         Windows/autocrlf CRLF checkout). -->
     <script>
       const stored = localStorage.getItem("theme");
       const theme =
