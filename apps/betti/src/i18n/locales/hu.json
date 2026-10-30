@@ -172,9 +172,11 @@
     "labels": {
       "address": "Cím",
       "phone": "Telefonszám",
-      "email": "E-mail cím"
+      "email": "E-mail cím",
+      "whatsapp": "WhatsApp"
     },
-    "mapLink": "Megnyitás Google Térképen ↗"
+    "mapLink": "Megnyitás Google Térképen ↗",
+    "whatsappFab": "Írj nekünk WhatsAppon"
   },
   "footer": {
     "tagline": "Családi és párkapcsolati coach"

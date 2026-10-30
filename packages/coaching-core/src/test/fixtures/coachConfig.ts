@@ -49,5 +49,6 @@ export const testCoachConfig: CoachConfig = {
     phoneDisplay: "+36 1 234 5678",
     phoneHref: "tel:+3612345678",
     email: "info@test.example",
+    whatsappUrl: "https://wa.me/3612345678",
   },
 };

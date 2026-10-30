@@ -172,9 +172,11 @@
     "labels": {
       "address": "Address",
       "phone": "Phone",
-      "email": "Email"
+      "email": "Email",
+      "whatsapp": "WhatsApp"
     },
-    "mapLink": "Open in Google Maps ↗"
+    "mapLink": "Open in Google Maps ↗",
+    "whatsappFab": "Message us on WhatsApp"
   },
   "footer": {
     "tagline": "Family & couples communication coach"

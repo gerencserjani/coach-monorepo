@@ -34,6 +34,9 @@ export interface CoachContactInfo {
   phoneDisplay: string;
   phoneHref: string;
   email: string;
+  // Absent while the coach hasn't set up a WhatsApp number -- the Contact
+  // section omits the row entirely rather than showing a dead link.
+  whatsappUrl?: string;
 }
 
 /**
