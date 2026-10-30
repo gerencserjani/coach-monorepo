@@ -1,3 +1,9 @@
+## [1.42.1](https://github.com/gerencserjani/coach-monorepo/compare/v1.42.0...v1.42.1) (2026-10-30)
+
+### Bug Fixes
+
+- generalize role subagents to the multi-tenant platform, not just Betti ([342ee41](https://github.com/gerencserjani/coach-monorepo/commit/342ee41f6554e96fed00800c09a5ad31f943f230))
+
 # [1.42.0](https://github.com/gerencserjani/coach-monorepo/compare/v1.41.0...v1.42.0) (2026-10-30)
 
 ### Features
