@@ -61,6 +61,28 @@
     <meta name="twitter:title" content="%VITE_SITE_TITLE%" />
     <meta name="twitter:description" content="%VITE_SITE_DESCRIPTION%" />
     <meta name="twitter:image" content="%VITE_SITE_URL%/og-image.png" />
+    <!-- Structured data (schema.org ProfessionalService) so search engines
+         can show richer results (address, phone) for this local coaching
+         practice. "sameAs" (the public Google Business Profile / Maps share
+         link -- NOT the private "Profil kezelése" editor URL) is
+         intentionally left out until that profile is live; add it as an
+         array entry once the public link is known. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "%VITE_SITE_NAME%",
+        "description": "%VITE_SITE_DESCRIPTION%",
+        "url": "%VITE_SITE_URL%/",
+        "image": "%VITE_SITE_URL%/og-image.png",
+        "telephone": "%VITE_SITE_PHONE%",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "%VITE_SITE_ADDRESS_LOCALITY%",
+          "addressCountry": "HU"
+        }
+      }
+    </script>
     <!-- If this script's content changes, the matching 'sha256-...' entry in
          vercel.json's Content-Security-Policy-Report-Only script-src must be
          regenerated (CSP allow-lists this exact inline script by hash,
