@@ -41,6 +41,7 @@ export const testCoachConfig: CoachConfig = {
       hasChips: true,
     },
     { id: "parenting", keyPrefix: "services.items.parenting", hasChips: true },
+    { id: "career", keyPrefix: "services.items.career", hasChips: true },
   ],
   pricing: {
     freeCallMinutes: 30,
