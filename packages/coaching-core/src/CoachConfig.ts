@@ -27,6 +27,16 @@ export interface CoachQualification {
   meta?: string;
 }
 
+export interface CoachMembership {
+  name: string;
+  url: string;
+  logo: CoachImage;
+  /** Neutral mounting background the logo needs to stay legible -- most
+   * association logos are a single fixed color (often white-on-transparent),
+   * so a theme-reactive chip would make them vanish in one mode. */
+  logoBg: "light" | "dark";
+}
+
 export interface CoachContactInfo {
   address: string;
   street: string;
@@ -55,6 +65,7 @@ export interface CoachConfig {
   // section renders a placeholder instead.
   aboutImage?: CoachImage;
   qualifications: CoachQualification[];
+  memberships: CoachMembership[];
   navLinks: NavLink[];
   contactLink: NavLink;
   services: Service[];

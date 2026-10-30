@@ -12,6 +12,14 @@ export const testCoachConfig: CoachConfig = {
     { label: "Test Qualification", meta: "Test Issuer · 2024" },
     { label: "Pending Qualification" },
   ],
+  memberships: [
+    {
+      name: "Test Membership",
+      url: "https://example.com/membership",
+      logo: { src: "/test-membership-logo.webp" },
+      logoBg: "light",
+    },
+  ],
   navLinks: [
     { id: "bemutatkozas", labelKey: "common.nav.introduction" },
     { id: "rolam", labelKey: "common.nav.about" },

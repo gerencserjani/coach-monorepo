@@ -13,7 +13,7 @@ interface Tab {
 
 export default function About(): ReactElement {
   const { t } = useTranslation();
-  const { qualifications, aboutImage } = useCoachConfig();
+  const { qualifications, memberships, aboutImage } = useCoachConfig();
   const { ref, className } = useRevealOnScroll<HTMLDivElement>();
   const [active, setActive] = useState(0);
 
@@ -54,6 +54,41 @@ export default function About(): ReactElement {
             </li>
           ))}
         </ul>
+      ),
+    });
+  }
+
+  if (memberships.length > 0) {
+    tabs.push({
+      label: t("about.membershipsHeading"),
+      content: (
+        <div className="flex flex-wrap gap-4">
+          {memberships.map((membership) => (
+            <a
+              key={membership.name}
+              href={membership.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex w-[152px] flex-col items-center gap-3 rounded-[18px] border border-line bg-bg-card p-5 text-center no-underline transition-colors duration-200 hover:border-accent"
+            >
+              <span
+                className={[
+                  "flex h-16 w-16 shrink-0 items-center justify-center rounded-full p-2.5",
+                  membership.logoBg === "dark" ? "bg-[#14110d]" : "bg-white",
+                ].join(" ")}
+              >
+                <img
+                  src={membership.logo.src}
+                  alt=""
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span className="serif text-[13.5px] leading-snug text-ink group-hover:text-accent">
+                {membership.name}
+              </span>
+            </a>
+          ))}
+        </div>
       ),
     });
   }
