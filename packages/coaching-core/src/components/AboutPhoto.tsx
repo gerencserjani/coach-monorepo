@@ -32,6 +32,11 @@ export default function AboutPhoto({
           alt={alt}
           loading="lazy"
           decoding="async"
+          style={
+            image.focalY !== undefined
+              ? { objectPosition: `50% ${image.focalY}%` }
+              : undefined
+          }
           className="h-full w-full object-cover"
         />
       ) : (
