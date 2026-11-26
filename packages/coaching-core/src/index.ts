@@ -39,6 +39,7 @@ export {
   type Service,
   type PriceRow,
   type CoachImage,
+  type CoachAboutImages,
   type CoachQualification,
   type CoachMembership,
   type CoachContactInfo,

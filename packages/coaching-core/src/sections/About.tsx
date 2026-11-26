@@ -4,29 +4,33 @@ import Section from "../components/Section.tsx";
 import Container from "../components/Container.tsx";
 import AboutPhoto from "../components/AboutPhoto.tsx";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
-import { useCoachConfig } from "../CoachConfig.ts";
+import { useCoachConfig, type CoachAboutImages } from "../CoachConfig.ts";
 
 interface Tab {
+  key: keyof CoachAboutImages;
   label: string;
   content: ReactNode;
 }
 
 export default function About(): ReactElement {
   const { t } = useTranslation();
-  const { qualifications, memberships, aboutImage } = useCoachConfig();
+  const { qualifications, memberships, aboutImages } = useCoachConfig();
   const { ref, className } = useRevealOnScroll<HTMLDivElement>();
   const [active, setActive] = useState(0);
 
   const tabs: Tab[] = [
     {
+      key: "intro",
       label: t("about.introHeading"),
       content: <p>{t("about.introParagraph1")}</p>,
     },
     {
+      key: "path",
       label: t("about.pathHeading"),
       content: <p>{t("about.pathParagraph")}</p>,
     },
     {
+      key: "reflection",
       label: t("about.reflectionHeading"),
       content: (
         <>
@@ -40,6 +44,7 @@ export default function About(): ReactElement {
 
   if (qualifications.length > 0) {
     tabs.push({
+      key: "qualifications",
       label: t("about.qualificationsHeading"),
       content: (
         <ul className="space-y-4">
@@ -60,6 +65,7 @@ export default function About(): ReactElement {
 
   if (memberships.length > 0) {
     tabs.push({
+      key: "memberships",
       label: t("about.membershipsHeading"),
       content: (
         <div className="flex flex-wrap gap-4">
@@ -130,7 +136,10 @@ export default function About(): ReactElement {
                 {activeTab.content}
               </div>
             </div>
-            <AboutPhoto image={aboutImage} alt={t("about.photoAlt")} />
+            <AboutPhoto
+              image={aboutImages?.[activeTab.key]}
+              alt={t("about.photoAlt")}
+            />
           </div>
         </div>
       </Container>

@@ -27,6 +27,20 @@ export interface CoachQualification {
   meta?: string;
 }
 
+/**
+ * One portrait photo per About-section subheading tab (see About.tsx's
+ * hardcoded tab list) -- each tab swaps in its own photo instead of the
+ * section showing one static image throughout. A tab with no entry here
+ * falls back to the placeholder, so a coach can fill these in gradually.
+ */
+export interface CoachAboutImages {
+  intro?: CoachImage;
+  path?: CoachImage;
+  reflection?: CoachImage;
+  qualifications?: CoachImage;
+  memberships?: CoachImage;
+}
+
 export interface CoachMembership {
   name: string;
   url: string;
@@ -64,9 +78,9 @@ export interface CoachConfig {
   logo: string;
   heroImage: CoachImage;
   communityImage: CoachImage;
-  // Absent while the coach hasn't supplied a personal photo yet -- the About
-  // section renders a placeholder instead.
-  aboutImage?: CoachImage;
+  // Per-tab photos for the About section -- see CoachAboutImages. Absent
+  // entries (or an absent object entirely) render a placeholder instead.
+  aboutImages?: CoachAboutImages;
   qualifications: CoachQualification[];
   memberships: CoachMembership[];
   navLinks: NavLink[];

@@ -55,7 +55,7 @@ describe("About", () => {
     ).toHaveAttribute("aria-current", "true");
   });
 
-  it("shows a photo placeholder when the coach has no aboutImage configured yet", () => {
+  it("shows a photo placeholder when the coach has no aboutImages configured yet", () => {
     renderAbout();
     expect(
       screen.queryByRole("img", { name: "Teszt coach portréja" }),
@@ -63,15 +63,43 @@ describe("About", () => {
     expect(screen.getByText("Fotó hamarosan")).toBeVisible();
   });
 
-  it("renders the real photo once aboutImage is configured", () => {
+  it("renders the real photo once aboutImages is configured for the active tab", () => {
     renderAbout({
       ...testCoachConfig,
-      aboutImage: { src: "/test-about.webp" },
+      aboutImages: { intro: { src: "/test-about.webp" } },
     });
     expect(
       screen.getByRole("img", { name: "Teszt coach portréja" }),
     ).toBeVisible();
     expect(screen.queryByText("Fotó hamarosan")).not.toBeInTheDocument();
+  });
+
+  it("swaps the photo per tab, falling back to the placeholder for tabs with no photo of their own", async () => {
+    renderAbout({
+      ...testCoachConfig,
+      aboutImages: {
+        intro: { src: "/test-about-intro.webp" },
+        path: { src: "/test-about-path.webp" },
+      },
+    });
+    expect(
+      screen.getByRole("img", { name: "Teszt coach portréja" }),
+    ).toHaveAttribute("src", "/test-about-intro.webp");
+
+    await userEvent.click(
+      screen.getByRole("button", { name: "A szakmai utam" }),
+    );
+    expect(
+      screen.getByRole("img", { name: "Teszt coach portréja" }),
+    ).toHaveAttribute("src", "/test-about-path.webp");
+
+    await userEvent.click(
+      screen.getByRole("button", { name: "Amit ma vallok" }),
+    );
+    expect(
+      screen.queryByRole("img", { name: "Teszt coach portréja" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("Fotó hamarosan")).toBeVisible();
   });
 
   it("lists the qualifications as plain text under their own tab, with no gallery or images", async () => {
