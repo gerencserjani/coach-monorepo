@@ -20,6 +20,8 @@ import aboutQualifications from "./assets/about-qualifications.webp";
 import aboutQualificationsSmall from "./assets/about-qualifications-480w.webp";
 import aboutMemberships from "./assets/about-memberships.webp";
 import aboutMembershipsSmall from "./assets/about-memberships-480w.webp";
+import aboutReflection from "./assets/about-reflection.webp";
+import aboutReflectionSmall from "./assets/about-reflection-480w.webp";
 
 export const bettiConfig: CoachConfig = {
   siteName,
@@ -32,8 +34,6 @@ export const bettiConfig: CoachConfig = {
     src: communityArt,
     srcSet: `${communityArtSmall} 520w, ${communityArt} 700w`,
   },
-  // "reflection" (Amit ma vallok) has no photo yet -- Betti's sending it
-  // separately; the tab falls back to the placeholder until then.
   aboutImages: {
     intro: {
       src: aboutIntro,
@@ -44,6 +44,10 @@ export const bettiConfig: CoachConfig = {
       src: aboutPath,
       srcSet: `${aboutPathSmall} 480w, ${aboutPath} 720w`,
       focalY: 20,
+    },
+    reflection: {
+      src: aboutReflection,
+      srcSet: `${aboutReflectionSmall} 480w, ${aboutReflection} 720w`,
     },
     qualifications: {
       src: aboutQualifications,
