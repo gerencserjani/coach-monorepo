@@ -19,6 +19,11 @@ export interface PriceRow {
 export interface CoachImage {
   src: string;
   srcSet?: string;
+  // Vertical object-position anchor (0 = top, 50 = center, 100 = bottom)
+  // for a box that crops this image to a different aspect ratio via
+  // object-fit: cover. Only meaningful there -- most images aren't
+  // cropped at all. Defaults to center (50) when omitted.
+  focalY?: number;
 }
 
 export interface CoachQualification {

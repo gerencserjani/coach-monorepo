@@ -38,10 +38,12 @@ export const bettiConfig: CoachConfig = {
     intro: {
       src: aboutIntro,
       srcSet: `${aboutIntroSmall} 480w, ${aboutIntro} 720w`,
+      focalY: 20,
     },
     path: {
       src: aboutPath,
       srcSet: `${aboutPathSmall} 480w, ${aboutPath} 720w`,
+      focalY: 20,
     },
     qualifications: {
       src: aboutQualifications,
@@ -50,6 +52,7 @@ export const bettiConfig: CoachConfig = {
     memberships: {
       src: aboutMemberships,
       srcSet: `${aboutMembershipsSmall} 480w, ${aboutMemberships} 720w`,
+      focalY: 20,
     },
   },
   qualifications,
