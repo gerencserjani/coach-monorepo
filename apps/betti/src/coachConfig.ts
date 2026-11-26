@@ -48,6 +48,7 @@ export const bettiConfig: CoachConfig = {
     reflection: {
       src: aboutReflection,
       srcSet: `${aboutReflectionSmall} 480w, ${aboutReflection} 720w`,
+      focalY: 20,
     },
     qualifications: {
       src: aboutQualifications,
