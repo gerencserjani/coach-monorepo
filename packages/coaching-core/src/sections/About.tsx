@@ -202,7 +202,13 @@ export default function About(): ReactElement {
             </div>
             <AboutPhoto
               key={activeTab.key}
-              className="about-photo-fade"
+              // Below `lg` the grid collapses to one column, so the photo
+              // would otherwise stretch to the full content width -- on a
+              // tablet-width single column (e.g. ~820px) that's a huge,
+              // disproportionate portrait. Capped and centered until the
+              // two-column layout kicks in and sizes it by its own 0.9fr
+              // track instead.
+              className="about-photo-fade mx-auto max-w-[420px] lg:mx-0 lg:max-w-none"
               image={aboutImages?.[activeTab.key]}
               alt={t("about.photoAlt")}
             />
